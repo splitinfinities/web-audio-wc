@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="web-audio">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `web-audio`
+     * Provides a declarative way of working with the web audio API.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class WebAudio extends Polymer.Element {
+      static get is() { return 'web-audio'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'web-audio'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(WebAudio.is, WebAudio);
+  </script>
+</dom-module>
