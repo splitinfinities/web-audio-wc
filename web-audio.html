@@ -1,15 +1,12 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./web-audio-source.html">
+<link rel="import" href="./web-audio-effect.html">
+<link rel="import" href="./web-audio-visualizer.html">
+<link rel="import" href="./web-audio-sequencer.html">
+<script src="./web-audio.js"></script>
+<script src="https://unpkg.com/webmidi@2.0.0-rc.7/webmidi.min.js"></script>
 
 <dom-module id="web-audio">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
-  </template>
-
   <script>
     /**
      * `web-audio`
@@ -20,17 +17,207 @@
      * @demo demo/index.html
      */
     class WebAudio extends Polymer.Element {
-      static get is() { return 'web-audio'; }
-      static get properties() {
+      static get is () { return 'web-audio'; }
+      static get properties () {
         return {
-          prop1: {
-            type: String,
-            value: 'web-audio'
+          prepared: {
+            type: Boolean,
+            value: false,
+            notify: true
+          },
+
+          autoplay: {
+            type: Boolean,
+            value: false
+          },
+
+          context: {
+            type: Object,
+            value: function () {
+              window.context = window.context || window.webkitcontext;
+              if (!window.audio_context) {
+                window.audio_context = new AudioContext();
+              }
+              return window.audio_context;
+            }
+          },
+
+          midi: {
+            type: Boolean,
+            value: false
+          },
+
+          gain: {
+            type: Object,
+            value: false
+          },
+
+          sources: {
+            type: Array,
+            value: []
+          },
+
+          _sources: {
+            type: Array,
+            value: []
+          },
+
+          keys: {
+            type: Array,
+            value: []
+          },
+
+          externalFiles: {
+            type: Array,
+            value: []
+          },
+
+          visualizers: {
+            type: Array,
+            value: []
           }
         };
+      }
+
+      ready () {
+        super.ready();
+
+        this.gain = this.context.createGain();
+
+        this.visualizers.forEach((visualizer, index) => {
+          if (index === 0) {
+            visualizer.connect(this.context, this.context.destination)
+          } else {
+            visualizer.connect(this.context, this.visualizers[(index - 1)].analyser)
+          }
+        });
+
+        if (this.visualizers.length >= 1) {
+          this.gain.connect(this.visualizers[(this.visualizers.length - 1)].analyser);
+        } else {
+          this.gain.connect(this.context.destination);
+        }
+
+        this.buildWebAudioNodes();
+
+        if (this.midi) {
+          this.connectMidiControllers();
+        }
+      }
+
+      connectedCallback () {
+        super.connectedCallback();
+      }
+
+      disconnectedCallback () {
+        super.disconnectedCallback();
+      }
+
+      connectMidiControllers () {
+        WebMidi.enable((err) => {
+          var input = WebMidi.inputs[0];
+          if (input) {
+            input.addListener('noteon', "all", (e) => {
+              console.log(e.note.number);
+              if (this.keys[e.note.number]) {
+                this.keys[e.note.number].gain.value = (e.data[2] / 175);
+                this.keys[e.note.number].play();
+              }
+            });
+          }
+        });
+      }
+
+      source (name) {
+        return this.sources[name];
+      }
+
+      buildWebAudioNodes () {
+        this.loadSourceFiles();
+      }
+
+      loadSourceFiles () {
+        let bufferLoader;
+
+        this._sources = this.querySelectorAll('web-audio-source');
+
+        this.externalFiles = [];
+
+        this._sources.forEach((source) => {
+          this.sources[source.name] = source;
+
+          if (this.midi) {
+            this.keys[source.midi] = source;
+          }
+
+          this.externalFiles.push(source.src)
+        });
+
+        bufferLoader = new BufferLoader( this.context, this.externalFiles, (bufferList) => {
+          this.loadedCallback(bufferList)
+        });
+
+        bufferLoader.load();
+      }
+
+      loadedCallback (bufferList) {
+        bufferList.forEach((item, index) => {
+          this._sources[index].assignBuffer(this.context, this.gain, item);
+        });
+
+        this._prepared();
+      }
+
+      _prepared () {
+        this.prepared = true;
       }
     }
 
     window.customElements.define(WebAudio.is, WebAudio);
   </script>
 </dom-module>
+
+
+<script type="text/javascript">
+  (function() {
+    var mousePos;
+
+    document.onmousemove = handleMouseMove;
+    setInterval(getMousePosition, 100); // setInterval repeats every X ms
+
+    function handleMouseMove(event) {
+      var dot, eventDoc, doc, body, pageX, pageY;
+
+      event = event || window.event; // IE-ism
+
+      // If pageX/Y aren't available and clientX/Y are,
+      // calculate pageX/Y - logic taken from jQuery.
+      // (This is to support old IE)
+      if (event.pageX == null && event.clientX != null) {
+          eventDoc = (event.target && event.target.ownerDocument) || document;
+          doc = eventDoc.documentElement;
+          body = eventDoc.body;
+
+          event.pageX = event.clientX +
+            (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+            (doc && doc.clientLeft || body && body.clientLeft || 0);
+          event.pageY = event.clientY +
+            (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
+            (doc && doc.clientTop  || body && body.clientTop  || 0 );
+      }
+
+      mousePos = {
+          toTop: event.pageY,
+          toRight: (window.innerWidth - event.pageX),
+          toBottom: (window.innerHeight - event.pageY),
+          toLeft: event.pageX,
+      };
+    }
+    function getMousePosition() {
+      if (mousePos) {
+        var event = new CustomEvent('mouse-update', { detail: mousePos });
+        document.dispatchEvent(event);
+      }
+    }
+  })();
+</script>

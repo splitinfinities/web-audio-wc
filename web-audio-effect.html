@@ -1,0 +1,169 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="web-audio-effect">
+  <script>
+    /**
+     * `web-audio-effect`
+     * Provides a declarative way of working with the web audio API.
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class WebAudioEffect extends Polymer.Element {
+      static get is () { return 'web-audio-effect'; }
+      static get properties () {
+        return {
+          type: {
+            type: String,
+            value: "delay",
+          },
+
+          method: {
+            type: String,
+            value: false,
+          },
+
+          responds: {
+            type: String,
+            value: false,
+          },
+
+          axis: {
+            type: String,
+            value: false,
+          },
+
+          value: {
+            type: Number,
+            value: 1.0,
+          },
+
+          context: {
+            type: Object,
+            value: () => {
+              return {};
+            }
+          },
+
+          child: {
+            type: Object,
+            value: () => {
+              return {};
+            }
+          },
+
+          parent: {
+            type: Object,
+            value: () => {
+              return {};
+            }
+          },
+
+          buffer: {
+            type: Object,
+            value: () => {
+              return {};
+            }
+          },
+
+          config: {
+            type: Object,
+            value: () => {
+              return {};
+            }
+          },
+
+          source: {
+            type: Object,
+            value: () => {
+              return {};
+            }
+          }
+        };
+      }
+
+      _effects () {
+        return ["panner", "listener", "reverb", "delay", "compression", "distortion", "filter"];
+      }
+
+      ready () {
+        super.ready();
+      }
+
+      attachEffect (context) {
+        this.context = context;
+
+        if (this._assert(this.type, `"${this.type}" is not a valid effect - Routing around to masterGain."`)) {
+          if (this.type === "panner") {
+            // make a PannerNode
+          } else if (this.type === "listener") {
+            // make a AudioListener
+          } else if (this.type === "reverb") {
+            // make a ConvolverNode
+            this.effect = this._buildReverbNode();
+          } else if (this.type === "filter") {
+            // make a BiquadFilterNode
+            this.effect = this._buildBiquadFilterNode();
+          } else if (this.type === "delay") {
+            // make a DelayNode
+            this.effect = this._buildDelayNode();
+          } else if (this.type === "compression") {
+            // make a DynamicsCompressorNode
+          } else if (this.type === "distortion") {
+            // make a WaveShaperNode
+          }
+        }
+
+        return this.effect;
+      }
+
+      _buildBiquadFilterNode () {
+        const biquadFilter = this.context.createBiquadFilter();
+
+        biquadFilter.type = this.method || "lowshelf";
+        biquadFilter.gain.value = 1.0;
+
+        if (this.responds === "mouse") {
+          document.addEventListener('mouse-update', (e) => {
+            if (this.axis === "x") {
+              biquadFilter.frequency.value = (e.detail.toLeft * 1.5) || 1000;
+            } else if (this.axis === "x-reverse") {
+              biquadFilter.frequency.value = (e.detail.toRight * 1.5) || 1000;
+            } else if (this.axis === "y") {
+              biquadFilter.frequency.value = (e.detail.toTop * 1.5) || 1000;
+            } else if (this.axis === "y-reverse") {
+              biquadFilter.frequency.value = (e.detail.toBottom * 1.5) || 1000;
+            } else if (this.axis === "bi") {
+              biquadFilter.frequency.value = ((e.detail.toRight + e.detail.toTop)) || 1000;
+            } else if (this.axis === "bi-reverse") {
+              biquadFilter.frequency.value = ((e.detail.toLeft + e.detail.toRight)) || 1000;
+            }
+          }, false);
+        } else {
+        biquadFilter.frequency.value = this.value;
+        }
+
+        return biquadFilter;
+      }
+
+      _buildDelayNode () {
+        const delay = this.context.createDelay(5.0);
+
+        delay.delayTime.value = 3.0;
+
+        return delay;
+      }
+
+      _assert(condition, message) {
+        if (!condition) {
+          throw message || "Assertion failed!";
+        }
+
+        return (condition);
+      }
+    }
+
+    window.customElements.define(WebAudioEffect.is, WebAudioEffect);
+  </script>
+</dom-module>

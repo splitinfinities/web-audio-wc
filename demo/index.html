@@ -22,7 +22,143 @@
       <h3>Basic web-audio demo</h3>
       <demo-snippet>
         <template>
-          <web-audio></web-audio>
+
+          <web-audio-visualizer for="rave"></web-audio-visualizer>
+          <web-audio-visualizer for="rave" type="webgl">
+            <web-audio-visualizer-shader type="vertex">
+              attribute vec2 position;
+
+              void main(void) {
+                gl_Position = vec4(position, 0, 1);
+              }
+            </web-audio-visualizer-shader>
+            <web-audio-visualizer-shader type="fragment">
+              precision mediump float;
+
+              uniform float time;
+              uniform vec2 resolution;
+              uniform sampler2D spectrum;
+
+              void main(void) {
+                vec3 c;
+                float z = 0.1 * time;
+                vec2 uv = gl_FragCoord.xy / resolution;
+                vec2 p = uv - 0.5;
+                p.x *= resolution.x / resolution.y;
+                float l = 0.2 * length(p);
+                for (int i = 0; i < 3; i++) {
+                  z += 0.07;
+                  uv += p / l * (sin(z) + 1.0) * abs(sin(l * 9.0 - z * 2.0));
+                  c[i] = 0.01 / length(abs(mod(uv, 1.0) - 0.5));
+                }
+                float intensity = texture2D(spectrum, vec2(l, 0.5)).x;
+                gl_FragColor = vec4(c / l * intensity, time);
+              }
+            </web-audio-visualizer-shader>
+
+          </web-audio-visualizer>
+
+          <web-audio name="rave">
+            <web-audio-source name="hum_base" src="./audio/hum_base.mp3"></web-audio-source>
+
+            <web-audio-effect name="one_effect" type="filter" method="bandpass" responds="mouse" axis="bi-reverse">
+              <web-audio-source name="hum_high" src="./audio/hum_high.mp3"></web-audio-source>
+            </web-audio-effect>
+
+            <web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="y">
+              <web-audio-effect name="one_effect" type="filter" method="notch" responds="mouse" axis="x">
+                <web-audio-source name="drums_relaxed" src="./audio/drums_relaxed.mp3"></web-audio-source>
+              </web-audio-effect>
+            </web-audio-effect>
+
+            <web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="y">
+              <web-audio-effect name="one_effect" type="filter" method="notch" responds="mouse" axis="x">
+                <web-audio-source name="drums_excited" src="./audio/drums_excited.mp3"></web-audio-source>
+              </web-audio-effect>
+            </web-audio-effect>
+
+            <web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="x">
+              <web-audio-effect name="one_effect" type="filter" method="notch" responds="mouse" axis="y">
+                <web-audio-source name="real_pizzicato" src="./audio/real_pizzicato.mp3"></web-audio-source>
+              </web-audio-effect>
+            </web-audio-effect>
+          </web-audio>
+
+          <web-audio name="rave_two">
+            <web-audio-source name="circling" src="./audio/4-4/circling.mp3"></web-audio-source>
+
+            <web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="bi-reverse">
+              <web-audio-source name="girl" src="./audio/Jamie xx - Girl.mp3"></web-audio-source>
+            </web-audio-effect>
+
+            <web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="bi">
+              <web-audio-source name="mura-musa" src="./audio/4-4/mura-musa.mp3"></web-audio-source>
+            </web-audio-effect>
+          </web-audio>
+
+          <web-audio midi channel="0">
+            <web-audio-effect name="kick_effect" type="filter">
+              <web-audio-source name="kick" src="./audio/samples/kick.mp3" midi="48"></web-audio-source>
+            </web-audio-effect>
+            <web-audio-effect name="kick_two_effect" type="filter">
+              <web-audio-source name="kick_two" src="./audio/samples/kick_two.wav" midi="48"></web-audio-source>
+            </web-audio-effect>
+            <web-audio-effect name="snare_effect" type="filter">
+              <web-audio-source name="snare" src="./audio/samples/snare.mp3" midi="49"></web-audio-source>
+            </web-audio-effect>
+            <web-audio-effect name="snare_two_effect" type="filter">
+              <web-audio-source name="snare_two" src="./audio/samples/snare_two.wav" midi="50"></web-audio-source>
+            </web-audio-effect>
+            <web-audio-effect name="clap_effect" type="filter">
+              <web-audio-source name="clap" src="./audio/samples/clap.wav" midi="51"></web-audio-source>
+            </web-audio-effect>
+            <web-audio-source name="hihat" src="./audio/samples/hihat.mp3" midi="44"></web-audio-source>
+            <web-audio-source name="pat" src="./audio/samples/pat.wav" midi="45"></web-audio-source>
+
+            <web-audio-effect name="guitar_strikes" type="filter" method="notch" value="1000">
+              <web-audio-source name="guitar_strike_1" src="./audio/samples/guitar-strikes/guitar_strike_1.mp3" midi="53"></web-audio-source>
+              <web-audio-source name="guitar_strike_2" src="./audio/samples/guitar-strikes/guitar_strike_2.mp3" midi="54"></web-audio-source>
+              <web-audio-source name="guitar_strike_3" src="./audio/samples/guitar-strikes/guitar_strike_3.mp3" midi="55"></web-audio-source>
+              <web-audio-source name="guitar_strike_4" src="./audio/samples/guitar-strikes/guitar_strike_4.mp3" midi="56"></web-audio-source>
+              <web-audio-source name="guitar_strike_5" src="./audio/samples/guitar-strikes/guitar_strike_5.mp3" midi="57"></web-audio-source>
+              <web-audio-source name="guitar_strike_6" src="./audio/samples/guitar-strikes/guitar_strike_6.mp3" midi="58"></web-audio-source>
+              <web-audio-source name="guitar_strike_7" src="./audio/samples/guitar-strikes/guitar_strike_7.mp3" midi="59"></web-audio-source>
+            </web-audio-effect>
+
+          </web-audio>
+
+          <web-audio-sequencer tempo="58.81" name="raver" taps="16"></web-audio-sequencer>
+
+          <web-audio-sequencer tempo="101.32" name="raver_two" taps="64"></web-audio-sequencer>
+
+          <button onclick="webAudioSequencer.play();">play</button>
+
+          <script>
+            var rave = document.querySelector('web-audio[name="rave"]');
+            var rave_two = document.querySelector('web-audio[name="rave_two"]');
+            var webAudioSequencer = document.querySelector('web-audio-sequencer[name="raver"]');
+            var webAudioSequencerTwo = document.querySelector('web-audio-sequencer[name="raver_two"]');
+
+            sequencer = [];
+
+            sequencer["raver"] = (iteration, time, beat, context) => {
+              if (rave.ready) {
+                // Start of the beat
+                if (beat === 0) {
+                  if ((iteration % 16) < 8) {
+                    rave.source("hum_base").play();
+                    rave.source("drums_relaxed").play();
+                  } else {
+                    rave.source("hum_base").play();
+                    rave.source("hum_high").play();
+                    rave.source("drums_excited").play();
+                    rave.source("real_pizzicato").play();
+                  }
+                }
+              }
+            }
+
+          </script>
         </template>
       </demo-snippet>
     </div>

@@ -1,0 +1,14 @@
+{
+  "name": "web-audio-wc",
+  "version": "0.1.0",
+  "description": "The Web Audio API, declaratively, with Web Components. Provides <web-audio>, <web-audio-source>, <web-audio-effect>, <web-audio-visualizer>, and <web-audio-sequencer>",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "polymer test"
+  },
+  "author": "",
+  "license": "ISC"
+}
