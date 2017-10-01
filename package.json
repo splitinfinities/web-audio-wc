@@ -1,7 +1,7 @@
 {
   "name": "web-audio-wc",
   "public": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The Web Audio API, declaratively, with Web Components. Provides <web-audio>, <web-audio-source>, <web-audio-effect>, <web-audio-visualizer>, and <web-audio-sequencer>",
   "main": "web-audio.html",
   "directories": {
