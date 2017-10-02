@@ -1,0 +1,39 @@
+{
+  "name": "web-audio-wc",
+  "public": true,
+  "version": "0.2.0",
+  "description": "The Web Audio API, declaratively, with Web Components. Provides <web-audio>, <web-audio-source>, <web-audio-effect>, <web-audio-visualizer>, and <web-audio-sequencer>",
+  "main": "dist/collection/index.js",
+  "types": "dist/collection/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "browser": "dist/webaudio.js",
+  "directories": {
+    "test": "test"
+  },
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/splitinfinities/web-audio-wc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/splitinfinities/web-audio-wc/issues"
+  },
+  "homepage": "https://webaudio.splitinfinities.com",
+  "scripts": {
+    "build": "stencil build",
+    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
+    "serve": "stencil-dev-server",
+    "start": "npm run dev"
+  },
+  "author": "William M. Riley, Split Infinities",
+  "license": "MIT",
+  "dependencies": {
+    "@stencil/core": "0.0.6-0"
+  },
+  "devDependencies": {
+    "@stencil/dev-server": "latest",
+    "@stencil/utils": "latest"
+  }
+}

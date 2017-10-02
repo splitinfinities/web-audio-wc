@@ -1,0 +1,168 @@
+{
+  "components": [
+    {
+      "tag": "web-audio",
+      "componentClass": "WebAudio",
+      "componentPath": "components/web-audio/web-audio.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/web-audio/web-audio.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first"
+        },
+        {
+          "name": "last"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "web-audio-debugger",
+      "componentClass": "WebAudioDebugger",
+      "componentPath": "components/web-audio-debugger/web-audio-debugger.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/web-audio-debugger/web-audio-debugger.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first"
+        },
+        {
+          "name": "last"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "web-audio-effect",
+      "componentClass": "WebAudioEffect",
+      "componentPath": "components/web-audio-effect/web-audio-effect.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/web-audio-effect/web-audio-effect.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first"
+        },
+        {
+          "name": "last"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "web-audio-sequencer",
+      "componentClass": "WebAudioSequencer",
+      "componentPath": "components/web-audio-sequencer/web-audio-sequencer.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/web-audio-sequencer/web-audio-sequencer.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first"
+        },
+        {
+          "name": "last"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "web-audio-source",
+      "componentClass": "WebAudioSource",
+      "componentPath": "components/web-audio-source/web-audio-source.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/web-audio-source/web-audio-source.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first"
+        },
+        {
+          "name": "last"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "web-audio-visualizer",
+      "componentClass": "WebAudioVisualizer",
+      "componentPath": "components/web-audio-visualizer/web-audio-visualizer.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/web-audio-visualizer/web-audio-visualizer.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first"
+        },
+        {
+          "name": "last"
+        }
+      ],
+      "shadow": true
+    },
+    {
+      "tag": "web-audio-visualizer-shader",
+      "componentClass": "WebAudioVisualizerShader",
+      "componentPath": "components/web-audio-visualizer-shader/web-audio-visualizer-shader.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/web-audio-visualizer-shader/web-audio-visualizer-shader.scss"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "first"
+        },
+        {
+          "name": "last"
+        }
+      ],
+      "shadow": true
+    }
+  ],
+  "bundles": [
+    {
+      "components": [
+        "web-audio",
+        "web-audio-debugger",
+        "web-audio-effect",
+        "web-audio-sequencer",
+        "web-audio-source",
+        "web-audio-visualizer",
+        "web-audio-visualizer-shader"
+      ]
+    }
+  ],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.0.6-0"
+  }
+}

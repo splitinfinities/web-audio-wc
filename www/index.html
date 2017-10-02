@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+	<title>Stencil Component Starter</title>
+	<script src="/build/webaudio.js"></script>
+
+</head>
+<body>
+	<web-audio></web-audio>
+	<web-audio-visualizer></web-audio-visualizer>
+
+	<web-audio-source></web-audio-source>
+
+	<web-audio-effect>
+		<web-audio-source></web-audio-source>
+	</web-audio-effect>
+
+	<web-audio-debugger></web-audio-debugger>
+
+  <script>
+    if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+      // auto-unregister service worker during dev mode
+      navigator.serviceWorker.ready.then(registration => {
+        registration.unregister().then(() => {
+          location.reload(true);
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>

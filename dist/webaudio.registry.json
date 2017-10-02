@@ -1,0 +1,127 @@
+{
+  "namespace": "webaudio",
+  "components": [
+    [
+      "WEB-AUDIO",
+      "web-audio",
+      {
+        "$": "web-audio"
+      },
+      [
+        [
+          "first",
+          1
+        ],
+        [
+          "last",
+          1
+        ]
+      ]
+    ],
+    [
+      "WEB-AUDIO-DEBUGGER",
+      "web-audio",
+      {
+        "$": "web-audio"
+      },
+      [
+        [
+          "first",
+          1
+        ],
+        [
+          "last",
+          1
+        ]
+      ]
+    ],
+    [
+      "WEB-AUDIO-EFFECT",
+      "web-audio",
+      {
+        "$": "web-audio"
+      },
+      [
+        [
+          "first",
+          1
+        ],
+        [
+          "last",
+          1
+        ]
+      ]
+    ],
+    [
+      "WEB-AUDIO-SEQUENCER",
+      "web-audio",
+      {
+        "$": "web-audio"
+      },
+      [
+        [
+          "first",
+          1
+        ],
+        [
+          "last",
+          1
+        ]
+      ]
+    ],
+    [
+      "WEB-AUDIO-SOURCE",
+      "web-audio",
+      {
+        "$": "web-audio"
+      },
+      [
+        [
+          "first",
+          1
+        ],
+        [
+          "last",
+          1
+        ]
+      ]
+    ],
+    [
+      "WEB-AUDIO-VISUALIZER",
+      "web-audio",
+      {
+        "$": "web-audio"
+      },
+      [
+        [
+          "first",
+          1
+        ],
+        [
+          "last",
+          1
+        ]
+      ]
+    ],
+    [
+      "WEB-AUDIO-VISUALIZER-SHADER",
+      "web-audio",
+      {
+        "$": "web-audio"
+      },
+      [
+        [
+          "first",
+          1
+        ],
+        [
+          "last",
+          1
+        ]
+      ]
+    ]
+  ],
+  "loader": "webaudio.js",
+  "core": "webaudio/webaudio.core.js",
+  "corePolyfilled": "webaudio/webaudio.core.pf.js"
+}
