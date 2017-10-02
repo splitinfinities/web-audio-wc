@@ -12,4 +12,10 @@ export class WebAudio {
   @Prop() first: string;
 
   @Prop() last: string;
+
+  render() {
+    return (
+      <p>I'm the parent</p>
+    );
+  }
 }
