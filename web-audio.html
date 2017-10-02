@@ -33,10 +33,21 @@
           context: {
             type: Object,
             value: function () {
-              window.context = window.context || window.webkitcontext;
-              if (!window.audio_context) {
-                window.audio_context = new AudioContext();
+
+              var AudioContext = window.AudioContext // Default
+                  || window.webkitAudioContext // Safari and old versions of Chrome
+                  || window.audio_context;
+
+              if (AudioContext) {
+                  // Do whatever you want using the Web Audio API
+                  window.audio_context = new AudioContext;
+                  // ...
+              } else {
+                  // Web Audio API is not supported
+                  // Alert the user
+                  alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox");
               }
+
               return window.audio_context;
             }
           },
