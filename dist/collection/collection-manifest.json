@@ -145,10 +145,53 @@
       },
       "props": [
         {
-          "name": "first"
+          "name": "autoplay",
+          "type": "boolean"
         },
         {
-          "name": "last"
+          "name": "name"
+        },
+        {
+          "name": "taps",
+          "type": "number"
+        },
+        {
+          "name": "tempo",
+          "type": "number"
+        }
+      ],
+      "states": [
+        {
+          "name": "context"
+        },
+        {
+          "name": "iterations"
+        },
+        {
+          "name": "noteTime"
+        },
+        {
+          "name": "rhythmIndex"
+        },
+        {
+          "name": "startTime"
+        },
+        {
+          "name": "timer"
+        },
+        {
+          "name": "totalPlayTime"
+        }
+      ],
+      "methods": [
+        {
+          "name": "custom"
+        },
+        {
+          "name": "play"
+        },
+        {
+          "name": "stop"
         }
       ],
       "shadow": true

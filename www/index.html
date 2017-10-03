@@ -11,6 +11,8 @@
 
 	<web-audio-visualizer for="testing"></web-audio-visualizer>
 
+	<web-audio-sequencer tempo="58.81" name="rave" taps="16"></web-audio-sequencer>
+
 	<web-audio name="rave">
 		<web-audio-source name="hum_base" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/hum_base.mp3"></web-audio-source>
 
@@ -38,6 +40,12 @@
 	</web-audio>
 
 	<web-audio-debugger></web-audio-debugger>
+
+	<button onclick="webAudioSequencer.play();">play</button>
+
+	<script>
+		var webAudioSequencer = document.querySelector('web-audio-sequencer[name="rave"]');
+	</script>
 
   <script>
     if ('serviceWorker' in navigator && location.protocol !== 'file:') {
