@@ -8,14 +8,34 @@
 
 </head>
 <body>
-	<web-audio></web-audio>
-	<web-audio-visualizer></web-audio-visualizer>
 
-	<web-audio-source></web-audio-source>
+	<web-audio-visualizer for="testing"></web-audio-visualizer>
 
-	<web-audio-effect>
-		<web-audio-source></web-audio-source>
-	</web-audio-effect>
+	<web-audio name="rave">
+		<web-audio-source name="hum_base" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/hum_base.mp3"></web-audio-source>
+
+		<web-audio-effect name="one_effect" type="filter" method="notch" responds="mouse" axis="bi-reverse">
+			<web-audio-source name="hum_high" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/hum_high.mp3"></web-audio-source>
+		</web-audio-effect>
+
+		<web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="y">
+			<web-audio-effect name="one_effect" type="filter" method="notch" responds="mouse" axis="x">
+				<web-audio-source name="drums_relaxed" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/drums_relaxed.mp3"></web-audio-source>
+			</web-audio-effect>
+		</web-audio-effect>
+
+		<web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="y">
+			<web-audio-effect name="one_effect" type="filter" method="notch" responds="mouse" axis="x">
+				<web-audio-source name="drums_excited" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/drums_excited.mp3"></web-audio-source>
+			</web-audio-effect>
+		</web-audio-effect>
+
+		<web-audio-effect name="two_effect" type="filter" method="lowpass" responds="mouse" axis="x">
+			<web-audio-effect name="one_effect" type="filter" method="notch" responds="mouse" axis="y">
+				<web-audio-source name="real_pizzicato" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/real_pizzicato.mp3"></web-audio-source>
+			</web-audio-effect>
+		</web-audio-effect>
+	</web-audio>
 
 	<web-audio-debugger></web-audio-debugger>
 

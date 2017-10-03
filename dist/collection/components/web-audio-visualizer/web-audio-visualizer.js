@@ -1,8 +1,9 @@
 var WebAudioVisualizer = /** @class */ (function () {
     function WebAudioVisualizer() {
+        this.for = "web_audio";
     }
     WebAudioVisualizer.prototype.render = function () {
-        return (h("p", 0, t("I'm a visualizer")));
+        return (h("canvas", { "a": { "id": "canvas" } }));
     };
     return WebAudioVisualizer;
 }());

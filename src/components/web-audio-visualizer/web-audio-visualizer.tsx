@@ -8,13 +8,15 @@ import { Component, Prop } from '@stencil/core';
 
 export class WebAudioVisualizer {
 
-  @Prop() first: string;
+  @Prop() for: string = "web_audio";
 
-  @Prop() last: string;
+  @Prop() context: AudioContext;
+
+  @Prop() analyser: AnalyserNode;
 
   render() {
     return (
-      <p>I'm a visualizer</p>
+      <canvas id="canvas"></canvas>
     );
   }
 }

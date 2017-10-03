@@ -13,12 +13,58 @@
       },
       "props": [
         {
-          "name": "first"
+          "name": "autoplay"
         },
         {
-          "name": "last"
+          "name": "midi"
+        },
+        {
+          "name": "name"
         }
       ],
+      "states": [
+        {
+          "name": "_currentSource"
+        },
+        {
+          "name": "_sources"
+        },
+        {
+          "name": "context"
+        },
+        {
+          "name": "externalFiles"
+        },
+        {
+          "name": "gain"
+        },
+        {
+          "name": "keys"
+        },
+        {
+          "name": "prepared"
+        },
+        {
+          "name": "previousVisualizer"
+        },
+        {
+          "name": "sources"
+        },
+        {
+          "name": "visualizerNodes"
+        },
+        {
+          "name": "visualizers"
+        }
+      ],
+      "methods": [
+        {
+          "name": "options"
+        }
+      ],
+      "hostElement": {
+        "name": "element"
+      },
       "shadow": true
     },
     {
@@ -55,10 +101,33 @@
       },
       "props": [
         {
-          "name": "first"
+          "name": "method"
         },
         {
-          "name": "last"
+          "name": "type"
+        },
+        {
+          "name": "value",
+          "type": "number"
+        }
+      ],
+      "states": [
+        {
+          "name": "child"
+        },
+        {
+          "name": "context"
+        },
+        {
+          "name": "effect"
+        },
+        {
+          "name": "parent"
+        }
+      ],
+      "methods": [
+        {
+          "name": "attachEffect"
         }
       ],
       "shadow": true
@@ -97,12 +166,60 @@
       },
       "props": [
         {
-          "name": "first"
+          "name": "midiChannel",
+          "type": "number"
         },
         {
-          "name": "last"
+          "name": "midiKey",
+          "type": "number"
+        },
+        {
+          "name": "name"
+        },
+        {
+          "name": "src"
         }
       ],
+      "states": [
+        {
+          "name": "buffer"
+        },
+        {
+          "name": "context"
+        },
+        {
+          "name": "effects"
+        },
+        {
+          "name": "entry"
+        },
+        {
+          "name": "masterGain"
+        },
+        {
+          "name": "postGain"
+        },
+        {
+          "name": "preGain"
+        },
+        {
+          "name": "source"
+        },
+        {
+          "name": "status"
+        }
+      ],
+      "methods": [
+        {
+          "name": "assignBuffer"
+        },
+        {
+          "name": "play"
+        }
+      ],
+      "hostElement": {
+        "name": "element"
+      },
       "shadow": true
     },
     {
@@ -118,10 +235,13 @@
       },
       "props": [
         {
-          "name": "first"
+          "name": "analyser"
         },
         {
-          "name": "last"
+          "name": "context"
+        },
+        {
+          "name": "for"
         }
       ],
       "shadow": true
