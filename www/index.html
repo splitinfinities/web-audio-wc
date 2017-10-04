@@ -42,9 +42,28 @@
 	<web-audio-debugger></web-audio-debugger>
 
 	<button onclick="webAudioSequencer.play();">play</button>
+	<button onclick="webAudioSequencer.stop();">stop</button>
 
 	<script>
 		var webAudioSequencer = document.querySelector('web-audio-sequencer[name="rave"]');
+		var rave = document.querySelector('web-audio[name="rave"]');
+
+		webAudioSequencer.custom = function () {
+			if (rave.is_prepared()) {
+				// Start of the beat
+				if (this.currentTap === 0) {
+					if ((this.iterations % 16) < 8) {
+						rave.source("hum_base").play();
+						rave.source("drums_relaxed").play();
+					} else {
+						rave.source("hum_base").play();
+						rave.source("hum_high").play();
+						rave.source("drums_excited").play();
+						rave.source("real_pizzicato").play();
+					}
+				}
+			}
+		}
 	</script>
 
   <script>

@@ -23,7 +23,8 @@ export class WebAudio {
 
   @Prop() name: string = "web_audio"
 
-  @State() prepared: Boolean
+  @State() prepared: Boolean = false
+
   @Prop() autoplay: Boolean
   @Prop() midi: Boolean
 
@@ -43,8 +44,13 @@ export class WebAudio {
   @State() visualizerNodes: Array<string>
 
   @Method()
-  options () {
-    return "nice!"
+  source (name) {
+    return this.sources[name];
+  }
+
+  @Method()
+  is_prepared () {
+    return this.prepared;
   }
 
   /******************

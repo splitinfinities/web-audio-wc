@@ -3,10 +3,14 @@ import { forEach } from '../../helpers';
 var WebAudio = /** @class */ (function () {
     function WebAudio() {
         this.name = "web_audio";
+        this.prepared = false;
         this.sources = [];
     }
-    WebAudio.prototype.options = function () {
-        return "nice!";
+    WebAudio.prototype.source = function (name) {
+        return this.sources[name];
+    };
+    WebAudio.prototype.is_prepared = function () {
+        return this.prepared;
     };
     /******************
      * Private behavior

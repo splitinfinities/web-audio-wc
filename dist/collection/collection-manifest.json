@@ -59,7 +59,10 @@
       ],
       "methods": [
         {
-          "name": "options"
+          "name": "is_prepared"
+        },
+        {
+          "name": "source"
         }
       ],
       "hostElement": {
@@ -149,6 +152,9 @@
           "type": "boolean"
         },
         {
+          "name": "custom"
+        },
+        {
           "name": "name"
         },
         {
@@ -165,13 +171,13 @@
           "name": "context"
         },
         {
+          "name": "currentTap"
+        },
+        {
           "name": "iterations"
         },
         {
           "name": "noteTime"
-        },
-        {
-          "name": "rhythmIndex"
         },
         {
           "name": "startTime"
@@ -184,9 +190,6 @@
         }
       ],
       "methods": [
-        {
-          "name": "custom"
-        },
         {
           "name": "play"
         },

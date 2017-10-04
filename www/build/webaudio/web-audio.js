@@ -64,10 +64,14 @@ var assert = function (condition, message) {
 var WebAudio = /** @class */ (function () {
     function WebAudio() {
         this.name = "web_audio";
+        this.prepared = false;
         this.sources = [];
     }
-    WebAudio.prototype.options = function () {
-        return "nice!";
+    WebAudio.prototype.source = function (name) {
+        return this.sources[name];
+    };
+    WebAudio.prototype.is_prepared = function () {
+        return this.prepared;
     };
     /******************
      * Private behavior
@@ -270,10 +274,13 @@ var WebAudioSequencer = /** @class */ (function () {
         this.autoplay = false;
         this.taps = 4;
         this.context = function () { return window.audio_context; };
+        this.noteTime = 0.0;
+        this.currentTap = 0;
         this.totalPlayTime = 0.0;
+        this.custom = function () {
+            console.log('boop');
+        };
     }
-    WebAudioSequencer.prototype.custom = function () { console.log('yo!'); };
-    
     WebAudioSequencer.prototype.componentDidLoad = function () {
         if (this.autoplay) {
             this.play();
@@ -286,7 +293,7 @@ var WebAudioSequencer = /** @class */ (function () {
         currentTime -= this.startTime;
         while (this.noteTime < currentTime + 0.005) {
             this.totalPlayTime = this.noteTime + this.startTime;
-            if (this.rhythmIndex === 0) {
+            if (this.currentTap === 0) {
                 this.iterations++;
             }
             this.custom();
@@ -299,11 +306,11 @@ var WebAudioSequencer = /** @class */ (function () {
     WebAudioSequencer.prototype.advance = function () {
         // Setting tempo to 60 BPM just for now
         var secondsPerBeat = 60 / this.tempo;
-        this.rhythmIndex++;
-        if (this.rhythmIndex == this.taps) {
-            this.rhythmIndex = 0;
+        this.currentTap++;
+        if (this.currentTap == this.taps) {
+            this.currentTap = 0;
         }
-        //0.25 because each square is a 16th note
+        // 0.25 because each square is a 16th note
         this.noteTime += 0.25 * secondsPerBeat;
     };
     WebAudioSequencer.prototype.play = function () {
@@ -313,10 +320,9 @@ var WebAudioSequencer = /** @class */ (function () {
     };
     WebAudioSequencer.prototype.stop = function () {
         this.iterations = 0;
+        this.startTime = null;
+        this.currentTap = 0;
         clearTimeout(this.timer);
-    };
-    WebAudioSequencer.prototype.render = function () {
-        return (h("p", 0, t("I'm an sequencer")));
     };
     return WebAudioSequencer;
 }());
@@ -425,12 +431,13 @@ exports['WEB-AUDIO-VISUALIZER-SHADER'] = WebAudioVisualizerShader;
   [ "element", /** element ref **/ 7 ],
   [ "externalFiles", /** state **/ 5 ],
   [ "gain", /** state **/ 5 ],
+  [ "is_prepared", /** method **/ 6 ],
   [ "keys", /** state **/ 5 ],
   [ "midi", /** prop **/ 1 ],
   [ "name", /** prop **/ 1 ],
-  [ "options", /** method **/ 6 ],
   [ "prepared", /** state **/ 5 ],
   [ "previousVisualizer", /** state **/ 5 ],
+  [ "source", /** method **/ 6 ],
   [ "sources", /** state **/ 5 ],
   [ "visualizerNodes", /** state **/ 5 ],
   [ "visualizers", /** state **/ 5 ]
@@ -524,12 +531,12 @@ exports['WEB-AUDIO-VISUALIZER-SHADER'] = WebAudioVisualizerShader;
 [
   [ "autoplay", /** prop **/ 1, /** type boolean **/ 1 ],
   [ "context", /** state **/ 5 ],
-  [ "custom", /** method **/ 6 ],
+  [ "currentTap", /** state **/ 5 ],
+  [ "custom", /** prop **/ 1 ],
   [ "iterations", /** state **/ 5 ],
   [ "name", /** prop **/ 1 ],
   [ "noteTime", /** state **/ 5 ],
   [ "play", /** method **/ 6 ],
-  [ "rhythmIndex", /** state **/ 5 ],
   [ "startTime", /** state **/ 5 ],
   [ "stop", /** method **/ 6 ],
   [ "taps", /** prop **/ 1, /** type number **/ 2 ],

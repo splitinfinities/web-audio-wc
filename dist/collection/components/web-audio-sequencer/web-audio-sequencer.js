@@ -4,10 +4,13 @@ var WebAudioSequencer = /** @class */ (function () {
         this.autoplay = false;
         this.taps = 4;
         this.context = function () { return window.audio_context; };
+        this.noteTime = 0.0;
+        this.currentTap = 0;
         this.totalPlayTime = 0.0;
+        this.custom = function () {
+            console.log('boop');
+        };
     }
-    WebAudioSequencer.prototype.custom = function () { console.log('yo!'); };
-    ;
     WebAudioSequencer.prototype.componentDidLoad = function () {
         if (this.autoplay) {
             this.play();
@@ -20,7 +23,7 @@ var WebAudioSequencer = /** @class */ (function () {
         currentTime -= this.startTime;
         while (this.noteTime < currentTime + 0.005) {
             this.totalPlayTime = this.noteTime + this.startTime;
-            if (this.rhythmIndex === 0) {
+            if (this.currentTap === 0) {
                 this.iterations++;
             }
             this.custom();
@@ -33,11 +36,11 @@ var WebAudioSequencer = /** @class */ (function () {
     WebAudioSequencer.prototype.advance = function () {
         // Setting tempo to 60 BPM just for now
         var secondsPerBeat = 60 / this.tempo;
-        this.rhythmIndex++;
-        if (this.rhythmIndex == this.taps) {
-            this.rhythmIndex = 0;
+        this.currentTap++;
+        if (this.currentTap == this.taps) {
+            this.currentTap = 0;
         }
-        //0.25 because each square is a 16th note
+        // 0.25 because each square is a 16th note
         this.noteTime += 0.25 * secondsPerBeat;
     };
     WebAudioSequencer.prototype.play = function () {
@@ -47,10 +50,9 @@ var WebAudioSequencer = /** @class */ (function () {
     };
     WebAudioSequencer.prototype.stop = function () {
         this.iterations = 0;
+        this.startTime = null;
+        this.currentTap = 0;
         clearTimeout(this.timer);
-    };
-    WebAudioSequencer.prototype.render = function () {
-        return (h("p", 0, t("I'm an sequencer")));
     };
     return WebAudioSequencer;
 }());
