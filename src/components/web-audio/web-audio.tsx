@@ -3,6 +3,14 @@ import { WebAudioVisualizer } from '../web-audio-visualizer/web-audio-visualizer
 import { WebAudioSource } from '../web-audio-source/web-audio-source'
 import { BufferLoader } from '../../bufferloader'
 import { forEach, delay } from '../../helpers'
+import webmidi from 'webmidi';
+
+interface MyCustomEvent extends CustomEvent {
+  note: {
+    number: number
+  },
+  data: object
+}
 
 interface MyWindow extends Window {
   myFunction(): void
@@ -26,7 +34,7 @@ export class WebAudio {
   @State() prepared: Boolean = false
 
   @Prop() autoplay: Boolean
-  @Prop() midi: Boolean
+  @Prop() midi: Boolean = false
 
   @State() context: AudioContext
   @State() gain: GainNode
@@ -35,7 +43,7 @@ export class WebAudio {
   @State() _sources: NodeList
   @State() _currentSource: WebAudioSource
 
-  @State() keys: Array<number>
+  @State() keys: Object = {}
 
   @State() externalFiles: Array<string>
 
@@ -63,8 +71,8 @@ export class WebAudio {
 
     this.connect_visualizers();
     this.connect_sources()
-    this.connect_sequencers()
     this.connect_debugger()
+    this.connect_midi()
   }
 
   connect_context () {
@@ -97,10 +105,6 @@ export class WebAudio {
     forEach(this._sources, (index, source) => {
       this.sources[source.name] = source
 
-      if (this.midi) {
-        this.keys[source.midi] = source
-      }
-
       let bufferLoader = new BufferLoader( this.context, [source.src], (bufferList) => {
         this.cache_sources(bufferList, source)
       })
@@ -109,10 +113,16 @@ export class WebAudio {
     }, this)
   }
 
-  cache_sources (bufferList, source) {
+  async cache_sources (bufferList, source) {
+    await delay(50)
     bufferList.forEach((item) => {
+
+      if (this.midi) {
+        this.keys[source.midikey] = source
+      }
+
       this._currentSource = source
-      this._currentSource.assignBuffer(this.context, this.gain, item)
+      this._currentSource.assignBuffer(this, item)
     })
 
     this._currentSource = null
@@ -121,7 +131,7 @@ export class WebAudio {
   }
 
   async connect_visualizers () {
-    await delay(300)
+    await delay(50)
 
     this.visualizers = document.querySelectorAll(`web-audio-visualizer[for="${this.name}"]`)
 
@@ -146,11 +156,34 @@ export class WebAudio {
     }
   }
 
-  connect_sequencers () {
-    console.log("connect_sequencers")
-  }
-
   connect_debugger () {
     console.log("connect_debugger")
+  }
+
+  connect_midi () {
+    if (this.midi) {
+      webmidi.enable((err) => {
+        var input = webmidi.inputs[0];
+        if (input) {
+          input.addListener('noteon', 'all', (e: MyCustomEvent) => {
+            if (this.keys[e.note.number]) {
+              this.keys[e.note.number].gain().value = (e.data[2] / 175);
+              this.keys[e.note.number].play();
+            }
+          });
+
+          input.addListener('pitchbend', 'all', function(e) {
+              console.log('Pitch value: ' + e.value);
+          });
+
+          // Listen to control change message on all channels
+          input.addListener('controlchange', "all",
+            function (e) {
+              console.log("Received 'controlchange' message.", e);
+            }
+          );
+        }
+      });
+    }
   }
 }

@@ -1,6 +1,4 @@
 import { Component, Prop, State, Method, Element } from '@stencil/core';
-import { WebAudio } from '../web-audio/web-audio';
-import { WebAudioEffect } from '../web-audio-effect/web-audio-effect';
 
 @Component({
   tag: 'web-audio-source',
@@ -11,19 +9,24 @@ import { WebAudioEffect } from '../web-audio-effect/web-audio-effect';
 export class WebAudioSource {
 
   @Element() element: HTMLElement;
+  @State() webAudioWrapper: HTMLElement;
 
   @Prop() src: string;
   @Prop() name: string;
 
-  @Prop() midiKey: number;
-  @Prop() midiChannel: number;
+  @Prop() inert: boolean = false;
+
+  @Prop() midikey: number = 0;
+  @Prop() midichannel: number = 0;
 
   @State() status: string = "paused";
+  @Prop() effectsvolume: number = 100;
 
   @State() context: AudioContext;
   @State() masterGain: GainNode;
-  @State() preGain: GainNode;
-  @State() postGain: GainNode;
+  @State() wetGain: GainNode;
+  @State() dryGain: GainNode;
+  @State() channelGain: GainNode;
   @State() effects: Array<object> = [];
 
   @State() source: AudioBufferSourceNode;
@@ -31,50 +34,78 @@ export class WebAudioSource {
   @State() entry: string;
 
   @Method()
-  play() {
-    this.source = this.context.createBufferSource();
-
-    this.source.buffer = this.buffer;
-
-    if (Object.keys(this.effects).length > 0) {
-      this.source.connect(this.preGain);
-    } else {
-      this.source.connect(this.postGain);
-    }
-
-    this.source.start(0);
+  getBuffer() {
+    return this.buffer;
   }
 
   @Method()
-  assignBuffer (context, masterGain, buffer) {
-    console.log(this.context);
-    this.context = context;
-    this.masterGain = masterGain;
+  webAudio() {
+    return this.webAudioWrapper;
+  }
+
+  @Method()
+  gain(place: string = "wet") {
+    if (place === "wet") {
+      return this.wetGain;
+    } else if (place === "dry") {
+      return this.dryGain;
+    } else if (place === "channel") {
+      return this.channelGain;
+    }
+  }
+
+  @Method()
+  play() {
+    if (!this.inert) {
+      this.source = this.context.createBufferSource();
+
+      this.source.buffer = this.buffer;
+
+      this.wetGain.gain.value = this.effectsvolume / 100;
+      this.dryGain.gain.value = Math.abs((this.effectsvolume - 100) / 100);
+
+      this.source.connect(this.wetGain);
+      this.source.connect(this.dryGain);
+
+      this.source.start(0);
+    } else {
+      throw "Cannot play inert media."
+    }
+  }
+
+  @Method()
+  assignBuffer (webAudio, buffer) {
+    this.webAudioWrapper = webAudio.element;
+    this.context = webAudio.context;
     this.buffer = buffer;
 
-    this.prepareEffects();
+    if (!this.inert) {
+      this.masterGain = webAudio.gain;
+      this.channelGain = this.context.createGain();
 
-    if (Object.keys(this.effects).length > 0) {
-      // Make the source and gain
-      this.preGain = this.context.createGain();
-      let previous = "";
+      this.prepareEffects();
 
-      Object.keys(this.effects).reverse().forEach((element, index) => {
-        if (index === 0) {
-          this.preGain.connect(this.effects[element]);
-        } else {
-          this.effects[previous].connect(this.effects[element]);
-        }
+      if (Object.keys(this.effects).length > 0) {
+        // Make the source and gain
+        this.wetGain = this.context.createGain();
+        let previous = "";
 
-        previous = element;
-      });
+        Object.keys(this.effects).reverse().forEach((element, index) => {
+          if (index === 0) {
+            this.wetGain.connect(this.effects[element]);
+          } else {
+            this.effects[previous].connect(this.effects[element]);
+          }
 
-      this.postGain = this.context.createGain();
-      this.effects[previous].connect(this.postGain)
-      this.postGain.connect(this.masterGain);
-    } else {
-      this.postGain = this.context.createGain();
-      this.postGain.connect(this.masterGain);
+          previous = element;
+        });
+
+        this.effects[previous].connect(this.channelGain)
+      }
+
+      this.dryGain = this.context.createGain();
+      this.dryGain.connect(this.channelGain);
+      this.channelGain.connect(this.masterGain)
     }
   }
 
@@ -83,16 +114,9 @@ export class WebAudioSource {
       let element: any = this.element.parentElement;
 
       while (element.nodeName !== "WEB-AUDIO") {
-        console.log(element.getAttribute("name"));
-        this.effects[element.getAttribute("name")] = element.attachEffect(this.context);
+        this.effects[element.getAttribute("name")] = element.attachEffect(this.context, this.element);
         element = element.parentElement;
       }
     }
-  }
-
-  render() {
-    return (
-      <p>I'm an source</p>
-    );
   }
 }

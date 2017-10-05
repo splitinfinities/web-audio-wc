@@ -12,9 +12,4 @@ export class WebAudioDebugger {
 
   @Prop() last: string;
 
-  render() {
-    return (
-      <p>I'm a debugger</p>
-    );
-  }
 }

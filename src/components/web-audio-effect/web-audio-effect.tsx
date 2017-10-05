@@ -1,4 +1,4 @@
-import { Component, Prop, State, Method } from '@stencil/core';
+import { Component, Prop, State, Method, Element } from '@stencil/core';
 import { assert } from '../../helpers'
 
 import { buildBiquadFilterNode, buildDelayNode, buildReverbNode } from '../../effects'
@@ -13,7 +13,11 @@ import { WebAudioSource } from '../web-audio-source/web-audio-source'
 
 export class WebAudioEffect {
 
+  @Element() element: HTMLElement
+
   @Prop() type: string;
+  @Prop() use: string;
+  @State() _use: HTMLElement;
   @Prop() method: string = "lowshelf";
   @State() effect: string;
   @Prop() value: number = 1.0;
@@ -23,12 +27,14 @@ export class WebAudioEffect {
 
 
   @State() context: AudioContext;
-  @State() child: WebAudioSource;
+  @State() source: WebAudioSource;
   @State() parent: WebAudioEffect | WebAudio;
 
   @Method()
-  attachEffect (context) {
+  attachEffect (context, source) {
     this.context = context;
+    this.source = source;
+    this._use = source.webAudio().querySelector(`web-audio-source[name=${this.use}]`)
 
     if (assert(this.type, `"${this.type}" is not a valid effect - Routing around to masterGain."`)) {
       if (this.type === "panner") {
@@ -56,11 +62,5 @@ export class WebAudioEffect {
 
   effects () {
      return ["panner", "listener", "reverb", "delay", "compression", "distortion", "filter"];
-  }
-
-  render() {
-    return (
-      <p>I'm an effect of {this.type}</p>
-    );
   }
 }

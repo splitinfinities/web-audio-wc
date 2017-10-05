@@ -1,11 +1,12 @@
 web-audio-visualizer {
 	display: block;
-	width: 800px;
-	height: 800px;
+
+  width: 800px;
+  height: 800px;
 
 	canvas {
 		display: block;
-		width: 100%;
-		height: 100%;
+    width: 800px;
+		height: 800px;
 	}
 }

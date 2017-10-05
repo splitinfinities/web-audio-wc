@@ -28,8 +28,15 @@ export const buildDelayNode = function (context, effectWC) {
 
 export const buildReverbNode = function (context, effectWC) {
 	const convolver = context.createConvolver();
+	var source = effectWC._use
 
-	responsiveTo(convolver, effectWC)
+	console.log(source)
+
+	if (source.getBuffer()) {
+		convolver.buffer = source.getBuffer()
+	}
+
+	// responsiveTo(convolver, effectWC)
 
 	return convolver;
 }

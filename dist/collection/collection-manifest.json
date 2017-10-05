@@ -116,13 +116,16 @@
           "name": "type"
         },
         {
+          "name": "use"
+        },
+        {
           "name": "value",
           "type": "number"
         }
       ],
       "states": [
         {
-          "name": "child"
+          "name": "_use"
         },
         {
           "name": "context"
@@ -132,6 +135,9 @@
         },
         {
           "name": "parent"
+        },
+        {
+          "name": "source"
         }
       ],
       "methods": [
@@ -139,6 +145,9 @@
           "name": "attachEffect"
         }
       ],
+      "hostElement": {
+        "name": "element"
+      },
       "shadow": true
     },
     {
@@ -218,11 +227,19 @@
       },
       "props": [
         {
-          "name": "midiChannel",
+          "name": "effectsvolume",
           "type": "number"
         },
         {
-          "name": "midiKey",
+          "name": "inert",
+          "type": "boolean"
+        },
+        {
+          "name": "midichannel",
+          "type": "number"
+        },
+        {
+          "name": "midikey",
           "type": "number"
         },
         {
@@ -237,7 +254,13 @@
           "name": "buffer"
         },
         {
+          "name": "channelGain"
+        },
+        {
           "name": "context"
+        },
+        {
+          "name": "dryGain"
         },
         {
           "name": "effects"
@@ -249,16 +272,16 @@
           "name": "masterGain"
         },
         {
-          "name": "postGain"
-        },
-        {
-          "name": "preGain"
-        },
-        {
           "name": "source"
         },
         {
           "name": "status"
+        },
+        {
+          "name": "webAudioWrapper"
+        },
+        {
+          "name": "wetGain"
         }
       ],
       "methods": [
@@ -266,7 +289,16 @@
           "name": "assignBuffer"
         },
         {
+          "name": "gain"
+        },
+        {
+          "name": "getBuffer"
+        },
+        {
           "name": "play"
+        },
+        {
+          "name": "webAudio"
         }
       ],
       "hostElement": {

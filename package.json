@@ -30,7 +30,8 @@
   "author": "William M. Riley, Split Infinities",
   "license": "MIT",
   "dependencies": {
-    "@stencil/core": "0.0.6-0"
+    "@stencil/core": "0.0.6-0",
+    "webmidi": "^2.0.0-rc.9"
   },
   "devDependencies": {
     "@stencil/dev-server": "latest",

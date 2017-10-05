@@ -96,14 +96,16 @@ export class WebAudioVisualizer {
   }
 
   wave () {
+    this.canvasCTX.fillRect(0, 0, this.width * 2, this.height);
     // Draw the time domain chart.
     for (var i = 0; i < this.analyser.frequencyBinCount; i++) {
       var value = this.times[i];
       var percent = value / 256;
       var height = this.height * percent;
-      var offset = this.height - height - 0;
-      var barWidth =  this.width/this.analyser.frequencyBinCount;
-      this.canvasCTX.fillStyle = 'black';
+      var offset = this.height - height;
+      var barWidth =  this.width / this.analyser.frequencyBinCount + 4;
+      var hue = i/this.analyser.frequencyBinCount * 360;
+      this.canvasCTX.fillStyle = 'hsl(' + hue + ', 100%, 50%)';
       this.canvasCTX.fillRect(i * barWidth, offset, 4, 4);
     }
   }

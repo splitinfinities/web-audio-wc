@@ -35,11 +35,14 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { BufferLoader } from '../../bufferloader';
 import { forEach, delay } from '../../helpers';
+import webmidi from 'webmidi';
 var WebAudio = /** @class */ (function () {
     function WebAudio() {
         this.name = "web_audio";
         this.prepared = false;
+        this.midi = false;
         this.sources = [];
+        this.keys = {};
     }
     WebAudio.prototype.source = function (name) {
         return this.sources[name];
@@ -55,8 +58,8 @@ var WebAudio = /** @class */ (function () {
         this.gain = this.context.createGain();
         this.connect_visualizers();
         this.connect_sources();
-        this.connect_sequencers();
         this.connect_debugger();
+        this.connect_midi();
     };
     WebAudio.prototype.connect_context = function () {
         var AudioContext = window.AudioContext // Default
@@ -83,9 +86,6 @@ var WebAudio = /** @class */ (function () {
         this.externalFiles = [];
         forEach(this._sources, function (index, source) {
             _this.sources[source.name] = source;
-            if (_this.midi) {
-                _this.keys[source.midi] = source;
-            }
             var bufferLoader = new BufferLoader(_this.context, [source.src], function (bufferList) {
                 _this.cache_sources(bufferList, source);
             });
@@ -93,20 +93,33 @@ var WebAudio = /** @class */ (function () {
         }, this);
     };
     WebAudio.prototype.cache_sources = function (bufferList, source) {
-        var _this = this;
-        bufferList.forEach(function (item) {
-            _this._currentSource = source;
-            _this._currentSource.assignBuffer(_this.context, _this.gain, item);
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, delay(50)];
+                    case 1:
+                        _a.sent();
+                        bufferList.forEach(function (item) {
+                            if (_this.midi) {
+                                _this.keys[source.midikey] = source;
+                            }
+                            _this._currentSource = source;
+                            _this._currentSource.assignBuffer(_this, item);
+                        });
+                        this._currentSource = null;
+                        this.prepared = true;
+                        return [2 /*return*/];
+                }
+            });
         });
-        this._currentSource = null;
-        this.prepared = true;
     };
     WebAudio.prototype.connect_visualizers = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, delay(300)];
+                    case 0: return [4 /*yield*/, delay(50)];
                     case 1:
                         _a.sent();
                         this.visualizers = document.querySelectorAll("web-audio-visualizer[for=\"" + this.name + "\"]");
@@ -135,11 +148,31 @@ var WebAudio = /** @class */ (function () {
             });
         });
     };
-    WebAudio.prototype.connect_sequencers = function () {
-        console.log("connect_sequencers");
-    };
     WebAudio.prototype.connect_debugger = function () {
         console.log("connect_debugger");
+    };
+    WebAudio.prototype.connect_midi = function () {
+        var _this = this;
+        if (this.midi) {
+            webmidi.enable(function (err) {
+                var input = webmidi.inputs[0];
+                if (input) {
+                    input.addListener('noteon', 'all', function (e) {
+                        if (_this.keys[e.note.number]) {
+                            _this.keys[e.note.number].gain().value = (e.data[2] / 175);
+                            _this.keys[e.note.number].play();
+                        }
+                    });
+                    input.addListener('pitchbend', 'all', function (e) {
+                        console.log('Pitch value: ' + e.value);
+                    });
+                    // Listen to control change message on all channels
+                    input.addListener('controlchange', "all", function (e) {
+                        console.log("Received 'controlchange' message.", e);
+                    });
+                }
+            });
+        }
     };
     return WebAudio;
 }());

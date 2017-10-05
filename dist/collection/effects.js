@@ -13,7 +13,12 @@ export var buildDelayNode = function (context, effectWC) {
 };
 export var buildReverbNode = function (context, effectWC) {
     var convolver = context.createConvolver();
-    responsiveTo(convolver, effectWC);
+    var source = effectWC._use;
+    console.log(source);
+    if (source.getBuffer()) {
+        convolver.buffer = source.getBuffer();
+    }
+    // responsiveTo(convolver, effectWC)
     return convolver;
 };
 // Private

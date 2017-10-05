@@ -7,8 +7,10 @@ var WebAudioEffect = /** @class */ (function () {
         this.responds = null;
         this.axis = "x";
     }
-    WebAudioEffect.prototype.attachEffect = function (context) {
+    WebAudioEffect.prototype.attachEffect = function (context, source) {
         this.context = context;
+        this.source = source;
+        this._use = source.webAudio().querySelector("web-audio-source[name=" + this.use + "]");
         if (assert(this.type, "\"" + this.type + "\" is not a valid effect - Routing around to masterGain.\"")) {
             if (this.type === "panner") {
                 // make a PannerNode
@@ -39,10 +41,6 @@ var WebAudioEffect = /** @class */ (function () {
     };
     WebAudioEffect.prototype.effects = function () {
         return ["panner", "listener", "reverb", "delay", "compression", "distortion", "filter"];
-    };
-    WebAudioEffect.prototype.render = function () {
-        return (h("p", 0, t("I'm an effect of "),
-            this.type));
     };
     return WebAudioEffect;
 }());
