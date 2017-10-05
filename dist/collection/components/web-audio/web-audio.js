@@ -54,58 +54,69 @@ var WebAudio = /** @class */ (function () {
      * Private behavior
      **/
     WebAudio.prototype.componentDidLoad = function () {
+        this.connect_debugger();
         this.connect_context();
         this.gain = this.context.createGain();
         this.connect_visualizers();
         this.connect_sources();
-        this.connect_debugger();
         this.connect_midi();
     };
     WebAudio.prototype.connect_context = function () {
-        var AudioContext = window.AudioContext // Default
-            || window.webkitAudioContext // Safari and old versions of Chrome
+        var AudioContext = window.AudioContext
+            || window.webkitAudioContext
             || window.audio_context;
         if (AudioContext) {
-            // Do whatever you want using the Web Audio API
             window.audio_context = new AudioContext;
-            // ...
+            this.log("Set window.audio_context");
         }
         else {
-            // Web Audio API is not supported
-            // Alert the user
-            console.error("The Web Audio API is not supported by your browser. ");
+            this.log("The Web Audio API is not supported by your browser.");
         }
         this.context = window.audio_context;
+        this.log("Connected to window.audio_context");
     };
     WebAudio.prototype.connect_sources = function () {
         this.build_sources();
     };
     WebAudio.prototype.build_sources = function () {
-        var _this = this;
-        this._sources = this.element.querySelectorAll('web-audio-source');
-        this.externalFiles = [];
-        forEach(this._sources, function (index, source) {
-            _this.sources[source.name] = source;
-            var bufferLoader = new BufferLoader(_this.context, [source.src], function (bufferList) {
-                _this.cache_sources(bufferList, source);
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                this.log("Building sources");
+                this._sources = this.element.querySelectorAll('web-audio-source');
+                this.externalFiles = [];
+                forEach(this._sources, function (index, source) {
+                    _this.log("Preparing " + source.name);
+                    _this.sources[source.name] = source;
+                    var bufferLoader = new BufferLoader(_this.context, [source.src], function (bufferList) {
+                        _this.cache_sources(bufferList, source);
+                    });
+                    bufferLoader.load();
+                }, this);
+                return [2 /*return*/];
             });
-            bufferLoader.load();
-        }, this);
+        });
     };
     WebAudio.prototype.cache_sources = function (bufferList, source) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, delay(50)];
+                    case 0: return [4 /*yield*/, delay(20)];
                     case 1:
                         _a.sent();
                         bufferList.forEach(function (item) {
+                            _this.log("Caching " + source.name);
                             if (_this.midi) {
-                                _this.keys[source.midikey] = source;
+                                _this.log("Assigned " + source.name + " to midi key " + source.midikey + ", channel " + source.midichannel);
+                                if (_this.keys[source.midichannel] == undefined) {
+                                    _this.keys[source.midichannel] = [];
+                                }
+                                _this.keys[source.midichannel][source.midikey] = source;
                             }
                             _this._currentSource = source;
                             _this._currentSource.assignBuffer(_this, item);
+                            _this.log("Source " + source.name + " is ready");
                         });
                         this._currentSource = null;
                         this.prepared = true;
@@ -119,11 +130,12 @@ var WebAudio = /** @class */ (function () {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, delay(50)];
+                    case 0: return [4 /*yield*/, delay(20)];
                     case 1:
                         _a.sent();
                         this.visualizers = document.querySelectorAll("web-audio-visualizer[for=\"" + this.name + "\"]");
                         if (this.visualizers) {
+                            this.log("Attaching visualizers");
                             forEach(this.visualizers, function (index, visualizer) {
                                 if (index === 0) {
                                     visualizer = visualizer.connect(_this.context, _this.context.destination);
@@ -135,7 +147,7 @@ var WebAudio = /** @class */ (function () {
                             }, this);
                         }
                         else {
-                            console.info('No visualizers bound to this web-audio instance');
+                            this.log("No visualizers for " + this.name);
                         }
                         if (this.visualizers.length >= 1) {
                             this.gain.connect(this.previousVisualizer.analyser);
@@ -149,27 +161,43 @@ var WebAudio = /** @class */ (function () {
         });
     };
     WebAudio.prototype.connect_debugger = function () {
-        // console.log("connect_debugger")
+        this.debugger = document.querySelector("web-audio-debugger[for=\"" + this.name + "\"]");
+        this.log("Connected debugger");
+    };
+    WebAudio.prototype.log = function (string) {
+        if (this.debugger) {
+            this.debugger.addHistory(string);
+        }
     };
     WebAudio.prototype.connect_midi = function () {
         var _this = this;
         if (this.midi) {
             webmidi.enable(function (err) {
+                if (err) {
+                    _this.log("Midi couldn't be enabled." + err);
+                }
+                else {
+                    _this.log("Midi is enabled");
+                }
                 var input = webmidi.inputs[0];
                 if (input) {
                     input.addListener('noteon', 'all', function (e) {
-                        if (_this.keys[e.note.number]) {
-                            _this.keys[e.note.number].gain().value = (e.data[2] / 175);
-                            _this.keys[e.note.number].play();
+                        _this.log("KEY: Channel: " + e.channel + ", Note: " + e.note.number + ", Name: " + e.note.name + ", Oct: " + e.note.octave);
+                        if (_this.keys[e.channel]) {
+                            _this.keys[e.channel][e.note.number].gain().value = (e.data[2] / 175);
+                            _this.keys[e.channel][e.note.number].play();
                         }
                     });
                     input.addListener('pitchbend', 'all', function (e) {
-                        console.log('Pitch value: ' + e.value);
+                        _this.log("PITCH: Channel: " + e.channel + ", Value: " + e.value);
                     });
                     // Listen to control change message on all channels
-                    input.addListener('controlchange', "all", function (e) {
-                        console.log("Received 'controlchange' message.", e);
+                    input.addListener('controlchange', 'all', function (e) {
+                        _this.log("CTRL: Channel: " + e.channel + ", controller: " + e.controller.number + ", Value: " + e.value);
+                        var event = new CustomEvent('midi-controller-update', { detail: e });
+                        document.dispatchEvent(event);
                     });
+                    _this.log("Listeners added for notes, pitch bend, and controllers.");
                 }
             });
         }

@@ -5,6 +5,7 @@ var WebAudioEffect = /** @class */ (function () {
         this.method = "lowshelf";
         this.value = 1.0;
         this.responds = null;
+        this.midicontroller = 0;
         this.axis = "x";
     }
     WebAudioEffect.prototype.attachEffect = function (context, source) {

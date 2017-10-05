@@ -1,5 +1,5 @@
 interface MyWindow extends Window {
-  myFunction(): void
+	myFunction(): void
 }
 
 declare var window
@@ -41,7 +41,9 @@ export const buildReverbNode = function (context, effectWC) {
 
 // Private
 const responsiveTo = function (effect, effectWC) {
-	if (effectWC.responds === "mouse") {
+	if (effectWC.midicontroller !== false) {
+		biquadResponsiveToMidi(effect, effectWC)
+	} else if (effectWC.responds === "mouse") {
 		biquadResponsiveToMouse(effect, effectWC)
 	} else {
 		effect.frequency.value = effectWC.value;
@@ -83,6 +85,14 @@ const getMousePosition = function () {
 		document.dispatchEvent(event);
 	}
 }
+
+const biquadResponsiveToMidi = function (effect, effectWC) {
+	document.addEventListener('midi-controller-update', (e: CustomEvent) => {
+		if (effectWC.midicontroller === e.detail.controller.number) {
+			effect.frequency.value = ((e.detail.value + 1) / 128) * 3000;
+		}
+	});
+};
 
 const biquadResponsiveToMouse = function (effect, effectWC) {
 	document.addEventListener('mouse-update', (e: CustomEvent) => {

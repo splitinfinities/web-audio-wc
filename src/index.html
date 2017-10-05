@@ -1,41 +1,102 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-	<title>Stencil Component Starter</title>
-	<script src="/build/webaudio.js"></script>
-	<style>
-	h1 {
-		display: inline-block;
-		transform: rotate(0);
-		transform-origin: center;
-		transition: all 50ms linear 0;
-	}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+		<title>Stencil Component Starter</title>
+		<script src="/build/webaudio.js"></script>
+		<style>
+			h1 {
+				display: inline-block;
+				transform: rotate(0);
+				transform-origin: center;
+				transition: all 50ms linear 0;
+			}
 
-	.kick h1 {
-		transform: rotate(-7deg);
-	}
+			.kick h1 {
+				transform: rotate(-7deg);
+			}
 
-	.snare h1 {
-		transform: rotate(7deg);
-	}
-</style>
-</head>
-<body>
-	<h1>Nice</h1>
+			.snare h1 {
+				transform: rotate(7deg);
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Nice</h1>
 
-	<button onclick="webAudio.source('drums_relaxed').play();">play</button>
+		<button onclick="webAudioSequencer.play();">play</button>
+		<button onclick="webAudioSequencer.stop();">stop</button>
 
+		<web-audio-debugger for="drumpad"></web-audio-debugger>
 
-	<web-audio name="rave">
-		<web-audio-effect type="filter" method="lowpass" responds="mouse" axis="y">
-			<web-audio-source name="drums_relaxed" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/drums_relaxed.mp3" effectsvolume="100"></web-audio-source>
-		</web-audio-effect>
-	</web-audio>
+		<web-audio midi='true' name='drumpad'>
+			<web-audio-effect method='highpass' type='filter' midicontroller="2">
+				<web-audio-effect method='bandpass' type='filter' midicontroller="1">
+					<web-audio-source midikey='49' name='snare' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/snare.mp3'></web-audio-source>
+					<web-audio-source midikey='48' name='kick' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/kick.mp3'></web-audio-source>
+					<web-audio-source midikey='50' name='tap' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/pat.mp3'></web-audio-source>
+					<web-audio-source midikey='44' name='tiss' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/hihat.mp3'></web-audio-source>
+					<web-audio-source midikey='45' name='snare_two' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/snare_two.mp3'></web-audio-source>
+					<web-audio-source midikey='45' name='kick_two' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/kick_two.mp3'></web-audio-source>
+					<web-audio-source midikey='46' name='metatron' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/metatron.mp3'></web-audio-source>
 
-	<script>
-		var webAudio = document.querySelector('web-audio');
-	</script>
-</body>
+					<web-audio-effect method='bandpass' type='filter' midicontroller="3">
+						<web-audio-source midikey='47' name='timegoesby' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/madonna/madonna_timegoesby.mp3'></web-audio-source>
+						<web-audio-source midikey='51' name='so_slowly' src='https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/samples/madonna/madonna_soslowly.mp3'></web-audio-source>
+					</web-audio-effect>
+				</web-audio-effect>
+			</web-audio-effect>
+		</web-audio>
+
+		<div style="display: flex;">
+			<web-audio-visualizer for="rave" type="wave"></web-audio-visualizer>
+			<web-audio-visualizer for='drumpad' type='bars'></web-audio-visualizer>
+		</div>
+
+		<web-audio name="rave">
+			<!-- Reverb -->
+			<web-audio-source name="tenniscourt" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/reverb/tenniscourt.mp3" inert="true"></web-audio-source>
+
+			<web-audio-effect name="kick_effect" type="reverb" use="tenniscourt">
+				<web-audio-source name="drums_relaxed" src="https://ui.splitinfinities.com/unbundled/node_modules/@splitinfinities/audio-stems/drums_relaxed.mp3" effectsvolume="0"></web-audio-source>
+			</web-audio-effect>
+		</web-audio>
+
+		<web-audio-sequencer tempo="58.81" name="rave" taps="16"></web-audio-sequencer>
+
+		<script>
+			var webAudioSequencer = document.querySelector('web-audio-sequencer[name="rave"]');
+			var rave = document.querySelector('web-audio[name="rave"]');
+			var body = document.querySelector('body');
+
+			webAudioSequencer.custom = function () {
+				if (rave.is_prepared()) {
+					// Start of the beat
+					if (this.currentTap === 0) {
+						if ((this.iterations % 16) < 8) {
+							// rave.source("hum_base").play();
+							rave.source("drums_relaxed").play();
+						} else {
+							rave.source("drums_relaxed").play();
+
+							// rave.source("hum_base").play();
+							// rave.source("hum_high").play();
+							// rave.source("drums_excited").play();
+							// rave.source("real_pizzicato").play();
+						}
+					}
+
+					if ((this.currentTap) % 4 === 0) {
+						body.classList.add('kick');
+					} else if ((this.currentTap + 2) % 4 === 0) {
+						body.classList.add('snare');
+					} else {
+						body.classList.remove('kick');
+						body.classList.remove('snare');
+					}
+				}
+			}
+		</script>
+	</body>
 </html>

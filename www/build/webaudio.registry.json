@@ -3,9 +3,9 @@
   "components": [
     [
       "WEB-AUDIO",
-      "d6svxpuv",
+      "web-audio",
       {
-        "$": "offppbtc"
+        "$": "web-audio"
       },
       [
         [
@@ -16,26 +16,23 @@
     ],
     [
       "WEB-AUDIO-DEBUGGER",
-      "d6svxpuv",
+      "web-audio",
       {
-        "$": "offppbtc"
+        "$": "web-audio"
       },
       [
         [
-          "first",
-          1
-        ],
-        [
-          "last",
-          1
+          "count",
+          1,
+          2
         ]
       ]
     ],
     [
       "WEB-AUDIO-EFFECT",
-      "d6svxpuv",
+      "web-audio",
       {
-        "$": "offppbtc"
+        "$": "web-audio"
       },
       [
         [
@@ -45,6 +42,11 @@
         [
           "method",
           1
+        ],
+        [
+          "midicontroller",
+          1,
+          2
         ],
         [
           "responds",
@@ -67,9 +69,9 @@
     ],
     [
       "WEB-AUDIO-SEQUENCER",
-      "d6svxpuv",
+      "web-audio",
       {
-        "$": "offppbtc"
+        "$": "web-audio"
       },
       [
         [
@@ -95,9 +97,9 @@
     ],
     [
       "WEB-AUDIO-SOURCE",
-      "d6svxpuv",
+      "web-audio",
       {
-        "$": "offppbtc"
+        "$": "web-audio"
       },
       [
         [
@@ -132,9 +134,9 @@
     ],
     [
       "WEB-AUDIO-VISUALIZER",
-      "d6svxpuv",
+      "web-audio",
       {
-        "$": "offppbtc"
+        "$": "web-audio"
       },
       [
         [
@@ -159,9 +161,9 @@
     ],
     [
       "WEB-AUDIO-VISUALIZER-SHADER",
-      "d6svxpuv",
+      "web-audio",
       {
-        "$": "offppbtc"
+        "$": "web-audio"
       },
       [
         [
@@ -172,6 +174,6 @@
     ]
   ],
   "loader": "webaudio.js",
-  "core": "webaudio/webaudio.xj53vhpg.js",
-  "corePolyfilled": "webaudio/webaudio.kmhw2lpz.pf.js"
+  "core": "webaudio/webaudio.core.js",
+  "corePolyfilled": "webaudio/webaudio.core.pf.js"
 }

@@ -2,7 +2,7 @@ var WebAudioSource = /** @class */ (function () {
     function WebAudioSource() {
         this.inert = false;
         this.midikey = 0;
-        this.midichannel = 0;
+        this.midichannel = 1;
         this.status = "paused";
         this.effectsvolume = 100;
         this.effects = [];

@@ -33,6 +33,9 @@
           "name": "context"
         },
         {
+          "name": "debugger"
+        },
+        {
           "name": "externalFiles"
         },
         {
@@ -83,10 +86,18 @@
       },
       "props": [
         {
-          "name": "first"
-        },
+          "name": "count",
+          "type": "number"
+        }
+      ],
+      "states": [
         {
-          "name": "last"
+          "name": "history"
+        }
+      ],
+      "methods": [
+        {
+          "name": "addHistory"
         }
       ],
       "shadow": true
@@ -108,6 +119,10 @@
         },
         {
           "name": "method"
+        },
+        {
+          "name": "midicontroller",
+          "type": "number"
         },
         {
           "name": "responds"

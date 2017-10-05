@@ -22,7 +22,10 @@ export var buildReverbNode = function (context, effectWC) {
 };
 // Private
 var responsiveTo = function (effect, effectWC) {
-    if (effectWC.responds === "mouse") {
+    if (effectWC.midicontroller !== false) {
+        biquadResponsiveToMidi(effect, effectWC);
+    }
+    else if (effectWC.responds === "mouse") {
         biquadResponsiveToMouse(effect, effectWC);
     }
     else {
@@ -58,6 +61,13 @@ var getMousePosition = function () {
         var event = new CustomEvent('mouse-update', { detail: window.mousePos });
         document.dispatchEvent(event);
     }
+};
+var biquadResponsiveToMidi = function (effect, effectWC) {
+    document.addEventListener('midi-controller-update', function (e) {
+        if (effectWC.midicontroller === e.detail.controller.number) {
+            effect.frequency.value = ((e.detail.value + 1) / 128) * 3000;
+        }
+    });
 };
 var biquadResponsiveToMouse = function (effect, effectWC) {
     document.addEventListener('mouse-update', function (e) {

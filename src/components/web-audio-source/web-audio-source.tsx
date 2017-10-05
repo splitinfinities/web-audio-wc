@@ -17,7 +17,7 @@ export class WebAudioSource {
   @Prop() inert: boolean = false;
 
   @Prop() midikey: number = 0;
-  @Prop() midichannel: number = 0;
+  @Prop() midichannel: number = 1;
 
   @State() status: string = "paused";
   @Prop() effectsvolume: number = 100;

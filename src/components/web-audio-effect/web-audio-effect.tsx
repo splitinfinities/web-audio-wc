@@ -23,8 +23,8 @@ export class WebAudioEffect {
   @Prop() value: number = 1.0;
 
   @Prop() responds: string = null;
+  @Prop() midicontroller: number = 0;
   @Prop() axis: string = "x";
-
 
   @State() context: AudioContext;
   @State() source: WebAudioSource;

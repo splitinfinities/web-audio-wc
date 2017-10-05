@@ -1,2 +1,32 @@
 /*! Built with http://stenciljs.com */
-!function(e,t,s,p,i,o,a,d,r){for((e[s]=e[s]||{}).components=a=a||[],(d=t.createElement("style")).setAttribute("data-styles",""),d.innerHTML=(a.map(function(e){return e[0]}).join(",")+"{visibility:hidden}.💎{visibility:inherit}").toLowerCase(),t.head.insertBefore(d,t.head.firstChild),s=s.toLowerCase(),r=(d=t.scripts).length-1;0<=r;r--)if(d[r].src&&d[r].src.split("/").pop()===s+".js"){p=d[r].src.replace(s+".js",s+"/");break}(d=t.createElement("script")).src=p+(e.customElements&&e.fetch?i:"webaudio.kmhw2lpz.pf.js"),d.setAttribute("data-path",p),d.setAttribute("data-core",i),t.head.appendChild(d)}(window,document,"webaudio","/build/webaudio/","webaudio.xj53vhpg.js",0,[["WEB-AUDIO","d6svxpuv",{$:"offppbtc"},[["name",1]]],["WEB-AUDIO-DEBUGGER","d6svxpuv",{$:"offppbtc"},[["first",1],["last",1]]],["WEB-AUDIO-EFFECT","d6svxpuv",{$:"offppbtc"},[["axis",1],["method",1],["responds",1],["type",1],["use",1],["value",1,2]]],["WEB-AUDIO-SEQUENCER","d6svxpuv",{$:"offppbtc"},[["autoplay",1,1],["name",1],["taps",1,2],["tempo",1,2]]],["WEB-AUDIO-SOURCE","d6svxpuv",{$:"offppbtc"},[["effectsvolume",1,2],["inert",1,1],["midichannel",1,2],["midikey",1,2],["name",1],["src",1]]],["WEB-AUDIO-VISUALIZER","d6svxpuv",{$:"offppbtc"},[["for",1],["size",1,2],["smoothing",1,2],["type",1]]],["WEB-AUDIO-VISUALIZER-SHADER","d6svxpuv",{$:"offppbtc"},[["type",1]]]]);
+(function (window, document, appNamespace, publicPath, appCore, appCorePolyfilled, components, x, i) {
+    'use strict';
+    // create global namespace if it doesn't already exist
+
+    (window[appNamespace] = window[appNamespace] || {}).components = components = components || [];
+    // auto hide components until they been fully hydrated
+    // reusing the "x" variable from the args for funzies
+    x = document.createElement('style');
+    x.setAttribute('data-styles', '');
+    x.innerHTML = (components.map(function (c) {
+        return c[0];
+    }).join(',') + '{visibility:hidden}.💎{visibility:inherit}').toLowerCase();
+    document.head.insertBefore(x, document.head.firstChild);
+    // get this current script
+    appNamespace = appNamespace.toLowerCase();
+    x = document.scripts;
+    for (i = x.length - 1; i >= 0; i--) {
+        if (x[i].src && x[i].src.split('/').pop() === appNamespace + '.js') {
+            publicPath = x[i].src.replace(appNamespace + '.js', appNamespace + '/');
+            break;
+        }
+    }
+    // request the core this browser needs
+    // test for native support of custom elements and fetch
+    // if either of those are not supported, then use the core w/ polyfills
+    x = document.createElement('script');
+    x.src = publicPath + (window.customElements && window.fetch ? appCore : appCorePolyfilled);
+    x.setAttribute('data-path', publicPath);
+    x.setAttribute('data-core', appCore);
+    document.head.appendChild(x);
+})(window, document, "webaudio","/build/webaudio/","webaudio.core.js","webaudio.core.pf.js",[["WEB-AUDIO","web-audio",{"$":"web-audio"},[["name",1]]],["WEB-AUDIO-DEBUGGER","web-audio",{"$":"web-audio"},[["count",1,2]]],["WEB-AUDIO-EFFECT","web-audio",{"$":"web-audio"},[["axis",1],["method",1],["midicontroller",1,2],["responds",1],["type",1],["use",1],["value",1,2]]],["WEB-AUDIO-SEQUENCER","web-audio",{"$":"web-audio"},[["autoplay",1,1],["name",1],["taps",1,2],["tempo",1,2]]],["WEB-AUDIO-SOURCE","web-audio",{"$":"web-audio"},[["effectsvolume",1,2],["inert",1,1],["midichannel",1,2],["midikey",1,2],["name",1],["src",1]]],["WEB-AUDIO-VISUALIZER","web-audio",{"$":"web-audio"},[["for",1],["size",1,2],["smoothing",1,2],["type",1]]],["WEB-AUDIO-VISUALIZER-SHADER","web-audio",{"$":"web-audio"},[["type",1]]]]);
