@@ -11,3 +11,6 @@ export var assert = function (condition, message) {
     }
     return (condition);
 };
+export var delay = function (ms) {
+    return new Promise(function (resolve) { return setTimeout(resolve, ms); });
+};

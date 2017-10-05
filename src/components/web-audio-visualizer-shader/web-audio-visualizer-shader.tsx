@@ -7,14 +7,9 @@ import { Component, Prop } from '@stencil/core';
 })
 
 export class WebAudioVisualizerShader {
-
-  @Prop() first: string;
-
-  @Prop() last: string;
+  @Prop() type: string;
 
   render() {
-    return (
-      <p>I'm a shader</p>
-    );
+    return ('');
   }
 }

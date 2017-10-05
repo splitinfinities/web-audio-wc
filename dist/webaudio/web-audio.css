@@ -24,14 +24,20 @@ my-name {
   font-weight: bold;
 }
 
-my-name {
-  font-family: Courier New, Courier, monospace;
-  font-weight: bold;
+web-audio-visualizer {
+  display: block;
+  width: 800px;
+  height: 800px;
 }
 
-my-name {
-  font-family: Courier New, Courier, monospace;
-  font-weight: bold;
+web-audio-visualizer canvas {
+  display: block;
+  width: 800px;
+  height: 800px;
+}
+
+web-audio-visualizer-shader {
+  display: none;
 }
 
 web-audio.💎,

@@ -2,7 +2,7 @@ import { Component, Prop, State, Method, Element } from '@stencil/core'
 import { WebAudioVisualizer } from '../web-audio-visualizer/web-audio-visualizer'
 import { WebAudioSource } from '../web-audio-source/web-audio-source'
 import { BufferLoader } from '../../bufferloader'
-import { forEach } from '../../helpers'
+import { forEach, delay } from '../../helpers'
 
 interface MyWindow extends Window {
   myFunction(): void
@@ -39,7 +39,7 @@ export class WebAudio {
 
   @State() externalFiles: Array<string>
 
-  @State() visualizers: NodeList
+  @State() visualizers: NodeListOf<Element>
   @State() previousVisualizer: WebAudioVisualizer
   @State() visualizerNodes: Array<string>
 
@@ -61,7 +61,7 @@ export class WebAudio {
 
     this.gain = this.context.createGain()
 
-    this.connect_visualizers()
+    this.connect_visualizers();
     this.connect_sources()
     this.connect_sequencers()
     this.connect_debugger()
@@ -120,16 +120,19 @@ export class WebAudio {
     this.prepared = true
   }
 
-  connect_visualizers () {
-    this.visualizers = document.querySelectorAll(`web-audio-visualizer[name="${this.name}"]`)
+  async connect_visualizers () {
+    await delay(300)
+
+    this.visualizers = document.querySelectorAll(`web-audio-visualizer[for="${this.name}"]`)
 
     if (this.visualizers) {
-      forEach(this.visualizers, (visualizer, index) => {
+      forEach(this.visualizers, (index, visualizer) => {
         if (index === 0) {
-          visualizer.connect(this.context, this.context.destination)
+          visualizer = visualizer.connect(this.context, this.context.destination)
         } else {
-          visualizer.connect(this.context, this.previousVisualizer.analyser)
+          visualizer = visualizer.connect(this.context, this.previousVisualizer.analyser)
         }
+
         this.previousVisualizer = visualizer
       }, this)
     } else {
@@ -150,22 +153,4 @@ export class WebAudio {
   connect_debugger () {
     console.log("connect_debugger")
   }
-
-  render() {
-    return (
-      <p>I'm the parent</p>
-    )
-  }
 }
-
-
-
-
-
-
-
-
-
-
-
-

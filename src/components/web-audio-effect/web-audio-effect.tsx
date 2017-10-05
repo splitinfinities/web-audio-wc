@@ -18,6 +18,10 @@ export class WebAudioEffect {
   @State() effect: string;
   @Prop() value: number = 1.0;
 
+  @Prop() responds: string = null;
+  @Prop() axis: string = "x";
+
+
   @State() context: AudioContext;
   @State() child: WebAudioSource;
   @State() parent: WebAudioEffect | WebAudio;

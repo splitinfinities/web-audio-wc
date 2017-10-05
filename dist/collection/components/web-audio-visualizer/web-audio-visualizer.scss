@@ -1,5 +1,11 @@
+web-audio-visualizer {
+	display: block;
+	width: 800px;
+	height: 800px;
 
-my-name {
-  font-family: Courier New, Courier, monospace;
-  font-weight: bold;
+	canvas {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
 }

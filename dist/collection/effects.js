@@ -19,32 +19,68 @@ export var buildReverbNode = function (context, effectWC) {
 // Private
 var responsiveTo = function (effect, effectWC) {
     if (effectWC.responds === "mouse") {
-        biquadResponsiveToMouse(effect);
+        biquadResponsiveToMouse(effect, effectWC);
     }
     else {
         effect.frequency.value = effectWC.value;
     }
 };
-var biquadResponsiveToMouse = function (effect) {
-    var _this = this;
+var handleMouseMove = function (event) {
+    var dot, eventDoc, doc, body, pageX, pageY;
+    event = event || window.event; // IE-ism
+    // If pageX/Y aren't available and clientX/Y are,
+    // calculate pageX/Y - logic taken from jQuery.
+    // (This is to support old IE)
+    if (event.pageX == null && event.clientX != null) {
+        eventDoc = (event.target && event.target.ownerDocument) || document;
+        doc = eventDoc.documentElement;
+        body = eventDoc.body;
+        event.pageX = event.clientX +
+            (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
+            (doc && doc.clientLeft || body && body.clientLeft || 0);
+        event.pageY = event.clientY +
+            (doc && doc.scrollTop || body && body.scrollTop || 0) -
+            (doc && doc.clientTop || body && body.clientTop || 0);
+    }
+    window.mousePos = {
+        toTop: event.pageY,
+        toRight: (window.innerWidth - event.pageX),
+        toBottom: (window.innerHeight - event.pageY),
+        toLeft: event.pageX,
+    };
+};
+var getMousePosition = function () {
+    if (window.mousePos) {
+        var event = new CustomEvent('mouse-update', { detail: window.mousePos });
+        document.dispatchEvent(event);
+    }
+};
+var biquadResponsiveToMouse = function (effect, effectWC) {
     document.addEventListener('mouse-update', function (e) {
-        if (_this.axis === "x") {
+        if (effectWC.axis === "x") {
             effect.frequency.value = (e.detail.toLeft * 1.5) || 1000;
         }
-        else if (_this.axis === "x-reverse") {
+        else if (effectWC.axis === "x-reverse") {
             effect.frequency.value = (e.detail.toRight * 1.5) || 1000;
         }
-        else if (_this.axis === "y") {
+        else if (effectWC.axis === "y") {
             effect.frequency.value = (e.detail.toTop * 1.5) || 1000;
         }
-        else if (_this.axis === "y-reverse") {
+        else if (effectWC.axis === "y-reverse") {
             effect.frequency.value = (e.detail.toBottom * 1.5) || 1000;
         }
-        else if (_this.axis === "bi") {
+        else if (effectWC.axis === "bi") {
             effect.frequency.value = ((e.detail.toRight + e.detail.toTop)) || 1000;
         }
-        else if (_this.axis === "bi-reverse") {
+        else if (effectWC.axis === "bi-reverse") {
             effect.frequency.value = ((e.detail.toLeft + e.detail.toRight)) || 1000;
         }
     }, false);
+    (function () {
+        if (!window.mouseInitialized) {
+            window.mouseInitialized = true;
+            document.onmousemove = handleMouseMove;
+            setInterval(getMousePosition, 100); // setInterval repeats every X ms
+        }
+    })();
 };

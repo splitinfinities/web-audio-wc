@@ -4,11 +4,11 @@ exports.config = {
   bundles: [
     {
       components: [
+        'web-audio-visualizer',
+        'web-audio-visualizer-shader',
         'web-audio',
         'web-audio-source',
         'web-audio-effect',
-        'web-audio-visualizer',
-        'web-audio-visualizer-shader',
         'web-audio-sequencer',
         'web-audio-debugger'
       ]

@@ -104,7 +104,13 @@
       },
       "props": [
         {
+          "name": "axis"
+        },
+        {
           "name": "method"
+        },
+        {
+          "name": "responds"
         },
         {
           "name": "type"
@@ -281,15 +287,81 @@
       },
       "props": [
         {
+          "name": "for"
+        },
+        {
+          "name": "renderer"
+        },
+        {
+          "name": "size",
+          "type": "number"
+        },
+        {
+          "name": "smoothing",
+          "type": "number"
+        },
+        {
+          "name": "type"
+        }
+      ],
+      "states": [
+        {
+          "name": "_bufferLength"
+        },
+        {
+          "name": "_dataArray"
+        },
+        {
           "name": "analyser"
+        },
+        {
+          "name": "canvas"
+        },
+        {
+          "name": "canvasCTX"
         },
         {
           "name": "context"
         },
         {
-          "name": "for"
+          "name": "fragment"
+        },
+        {
+          "name": "fragShader"
+        },
+        {
+          "name": "fragSpectrumArray"
+        },
+        {
+          "name": "fragTime"
+        },
+        {
+          "name": "freqs"
+        },
+        {
+          "name": "height"
+        },
+        {
+          "name": "times"
+        },
+        {
+          "name": "vertex"
+        },
+        {
+          "name": "vertexShader"
+        },
+        {
+          "name": "width"
         }
       ],
+      "methods": [
+        {
+          "name": "connect"
+        }
+      ],
+      "hostElement": {
+        "name": "element"
+      },
       "shadow": true
     },
     {
@@ -305,10 +377,7 @@
       },
       "props": [
         {
-          "name": "first"
-        },
-        {
-          "name": "last"
+          "name": "type"
         }
       ],
       "shadow": true
