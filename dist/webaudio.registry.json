@@ -3,9 +3,9 @@
   "components": [
     [
       "WEB-AUDIO",
-      "web-audio",
+      "ybbwgiv2",
       {
-        "$": "web-audio"
+        "$": "p7zogrot"
       },
       [
         [
@@ -16,9 +16,9 @@
     ],
     [
       "WEB-AUDIO-DEBUGGER",
-      "web-audio",
+      "ybbwgiv2",
       {
-        "$": "web-audio"
+        "$": "p7zogrot"
       },
       [
         [
@@ -30,9 +30,9 @@
     ],
     [
       "WEB-AUDIO-EFFECT",
-      "web-audio",
+      "ybbwgiv2",
       {
-        "$": "web-audio"
+        "$": "p7zogrot"
       },
       [
         [
@@ -69,9 +69,9 @@
     ],
     [
       "WEB-AUDIO-SEQUENCER",
-      "web-audio",
+      "ybbwgiv2",
       {
-        "$": "web-audio"
+        "$": "p7zogrot"
       },
       [
         [
@@ -97,9 +97,9 @@
     ],
     [
       "WEB-AUDIO-SOURCE",
-      "web-audio",
+      "ybbwgiv2",
       {
-        "$": "web-audio"
+        "$": "p7zogrot"
       },
       [
         [
@@ -134,9 +134,9 @@
     ],
     [
       "WEB-AUDIO-VISUALIZER",
-      "web-audio",
+      "ybbwgiv2",
       {
-        "$": "web-audio"
+        "$": "p7zogrot"
       },
       [
         [
@@ -161,9 +161,9 @@
     ],
     [
       "WEB-AUDIO-VISUALIZER-SHADER",
-      "web-audio",
+      "ybbwgiv2",
       {
-        "$": "web-audio"
+        "$": "p7zogrot"
       },
       [
         [
@@ -174,6 +174,6 @@
     ]
   ],
   "loader": "webaudio.js",
-  "core": "webaudio/webaudio.core.js",
-  "corePolyfilled": "webaudio/webaudio.core.pf.js"
+  "core": "webaudio/webaudio.xj53vhpg.js",
+  "corePolyfilled": "webaudio/webaudio.kmhw2lpz.pf.js"
 }
