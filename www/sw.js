@@ -20,15 +20,15 @@ importScripts('workbox-sw.prod.v2.0.1.js');
 const fileManifest = [
   {
     "url": "build/webaudio.js",
-    "revision": "823cd149d53026d7a1a53909768df79f"
+    "revision": "7abac6ccbc75a5863b5005cbebd7a4d9"
   },
   {
     "url": "build/webaudio.registry.json",
-    "revision": "6ed18758c746c18f6bd43d79cc9a8737"
+    "revision": "7bf53f9c573359de04d7cdf6173c6a9c"
   },
   {
-    "url": "build/webaudio/ddkvuxww.js",
-    "revision": "ed0951e826542ca570d53432d71eefeb"
+    "url": "build/webaudio/d6svxpuv.js",
+    "revision": "16f2d4fcd3cd4dcbe5bb3cd5c212d3c5"
   },
   {
     "url": "build/webaudio/offppbtc.css",
@@ -44,7 +44,7 @@ const fileManifest = [
   },
   {
     "url": "index.html",
-    "revision": "1631617109649c957bb04b9dcf8d4262"
+    "revision": "ed13f6c50c31a516f4dbf11902b0d586"
   }
 ];
 

@@ -53,7 +53,7 @@ Instead, use a prefix that fits your company or any name for a group of related 
 ### Script tag
 
 - [Publish to NPM](https://docs.npmjs.com/getting-started/publishing-npm-packages)
-- Put a script tag similar to this `<script src='https://unpkg.com/my-name@0.0.1/dist/myname.js'></script>` in the head of your index.html
+- Put a script tag similar to this `<script src='https://unpkg.com/web-audio-wc@0.2.0/dist/webaudio.js'></script>` in the head of your index.html
 - Then you can use the element anywhere in your template, JSX, html etc
 
 ### Node Modules

@@ -30,8 +30,6 @@ export const buildReverbNode = function (context, effectWC) {
 	const convolver = context.createConvolver();
 	var source = effectWC._use
 
-	console.log(source)
-
 	if (source.getBuffer()) {
 		convolver.buffer = source.getBuffer()
 	}

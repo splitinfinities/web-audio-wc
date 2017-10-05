@@ -157,7 +157,7 @@ export class WebAudio {
   }
 
   connect_debugger () {
-    console.log("connect_debugger")
+    // console.log("connect_debugger")
   }
 
   connect_midi () {

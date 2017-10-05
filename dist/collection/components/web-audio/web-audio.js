@@ -149,7 +149,7 @@ var WebAudio = /** @class */ (function () {
         });
     };
     WebAudio.prototype.connect_debugger = function () {
-        console.log("connect_debugger");
+        // console.log("connect_debugger")
     };
     WebAudio.prototype.connect_midi = function () {
         var _this = this;

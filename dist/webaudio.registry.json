@@ -3,7 +3,7 @@
   "components": [
     [
       "WEB-AUDIO",
-      "ddkvuxww",
+      "d6svxpuv",
       {
         "$": "offppbtc"
       },
@@ -16,7 +16,7 @@
     ],
     [
       "WEB-AUDIO-DEBUGGER",
-      "ddkvuxww",
+      "d6svxpuv",
       {
         "$": "offppbtc"
       },
@@ -33,7 +33,7 @@
     ],
     [
       "WEB-AUDIO-EFFECT",
-      "ddkvuxww",
+      "d6svxpuv",
       {
         "$": "offppbtc"
       },
@@ -67,7 +67,7 @@
     ],
     [
       "WEB-AUDIO-SEQUENCER",
-      "ddkvuxww",
+      "d6svxpuv",
       {
         "$": "offppbtc"
       },
@@ -95,7 +95,7 @@
     ],
     [
       "WEB-AUDIO-SOURCE",
-      "ddkvuxww",
+      "d6svxpuv",
       {
         "$": "offppbtc"
       },
@@ -132,7 +132,7 @@
     ],
     [
       "WEB-AUDIO-VISUALIZER",
-      "ddkvuxww",
+      "d6svxpuv",
       {
         "$": "offppbtc"
       },
@@ -159,7 +159,7 @@
     ],
     [
       "WEB-AUDIO-VISUALIZER-SHADER",
-      "ddkvuxww",
+      "d6svxpuv",
       {
         "$": "offppbtc"
       },

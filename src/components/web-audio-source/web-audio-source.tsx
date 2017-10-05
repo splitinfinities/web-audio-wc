@@ -61,10 +61,18 @@ export class WebAudioSource {
 
       this.source.buffer = this.buffer;
 
-      this.wetGain.gain.value = this.effectsvolume / 100;
-      this.dryGain.gain.value = Math.abs((this.effectsvolume - 100) / 100);
+      if (this.wetGain) {
+        this.wetGain.gain.value = this.effectsvolume / 100;
+        this.dryGain.gain.value = Math.abs((this.effectsvolume - 100) / 100);
+      } else {
+        this.dryGain.gain.value = 1;
+      }
 
-      this.source.connect(this.wetGain);
+
+      if (this.wetGain) {
+        this.source.connect(this.wetGain);
+      }
+
       this.source.connect(this.dryGain);
 
       this.source.start(0);

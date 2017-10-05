@@ -8,7 +8,7 @@ var WebAudioSequencer = /** @class */ (function () {
         this.currentTap = 0;
         this.totalPlayTime = 0.0;
         this.custom = function () {
-            console.log('boop');
+            // do nothing
         };
     }
     WebAudioSequencer.prototype.componentDidLoad = function () {

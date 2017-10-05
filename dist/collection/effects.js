@@ -14,7 +14,6 @@ export var buildDelayNode = function (context, effectWC) {
 export var buildReverbNode = function (context, effectWC) {
     var convolver = context.createConvolver();
     var source = effectWC._use;
-    console.log(source);
     if (source.getBuffer()) {
         convolver.buffer = source.getBuffer();
     }

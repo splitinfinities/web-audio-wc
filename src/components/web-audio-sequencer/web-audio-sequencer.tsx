@@ -27,7 +27,7 @@ export class WebAudioSequencer {
   @State() totalPlayTime: number = 0.0
 
   @Prop() custom: Function = () => {
-    console.log('boop')
+    // do nothing
   }
 
 
