@@ -4,6 +4,39 @@
 
 Web Audio's API can often get a little daunting. This package provides HTML tags that simplify web audio and make wrapping sources in effects super simple! 
 
+## API
+#### `<web-audio>`
+More to come...
+
+#### `<web-audio-source>`
+More to come...
+
+#### `<web-audio-effect>`
+More to come...
+
+#### `<web-audio-visualizer>`
+More to come...
+
+#### `<web-audio-visualizer-shader>`
+More to come...
+
+#### `<web-audio-sequencer>`
+More to come...
+
+#### `<web-audio-debugger>`
+More to come...
+
+#### `Midi controller support`
+More to come...
+
+
+## Examples
+- Simplest "click to play" example https://codepen.io/splitinfinities/pen/pWpvbe
+- Creating a sequencer https://codepen.io/splitinfinities/pen/Ewoaoe
+- Effects and contextual hooks https://codepen.io/splitinfinities/pen/qPpEYv
+- Midi controllers: https://codepen.io/splitinfinities/pen/VMyYoY
+- Sequencer and callbacks with GSAP https://codepen.io/splitinfinities/pen/zEjKPN
+
 ## Developing
 
 To start building on to this package, clone this repo to a new directory:
