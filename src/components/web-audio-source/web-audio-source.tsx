@@ -2,7 +2,6 @@ import { Component, Prop, State, Method, Element } from '@stencil/core';
 
 @Component({
   tag: 'web-audio-source',
-  styleUrl: 'web-audio-source.scss',
   shadow: true
 })
 

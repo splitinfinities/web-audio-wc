@@ -1,0 +1,8 @@
+web-audio-visualizer {
+  display: block;
+  width: 800px;
+  height: 800px; }
+  web-audio-visualizer canvas {
+    display: block;
+    width: 800px;
+    height: 800px; }

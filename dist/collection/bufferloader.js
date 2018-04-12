@@ -1,5 +1,5 @@
-var BufferLoader = /** @class */ (function () {
-    function BufferLoader(context, urlList, callback) {
+export class BufferLoader {
+    constructor(context, urlList, callback) {
         this.loadBuffer = function (url, index) {
             // Load buffer asynchronously
             var request = new XMLHttpRequest();
@@ -36,6 +36,4 @@ var BufferLoader = /** @class */ (function () {
         this.bufferList = new Array();
         this.loadCount = 0;
     }
-    return BufferLoader;
-}());
-export { BufferLoader };
+}

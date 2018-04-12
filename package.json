@@ -3,8 +3,8 @@
   "public": true,
   "version": "0.3.0",
   "description": "The Web Audio API, declaratively, with Web Components. Provides <web-audio>, <web-audio-source>, <web-audio-effect>, <web-audio-visualizer>, and <web-audio-sequencer>",
-  "main": "dist/collection/index.js",
-  "types": "dist/collection/index.d.ts",
+  "main": "dist/webaudio.js",
+  "types": "dist/collection/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "browser": "dist/webaudio.js",
   "directories": {
@@ -30,7 +30,8 @@
   "author": "William M. Riley, Split Infinities",
   "license": "MIT",
   "dependencies": {
-    "@stencil/core": "0.0.6-0",
+    "@stencil/core": "^0.7.22",
+    "@stencil/sass": "0.0.3",
     "webmidi": "^2.0.0-rc.9"
   },
   "devDependencies": {

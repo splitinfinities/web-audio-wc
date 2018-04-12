@@ -1,14 +1,7 @@
 import { Component, Prop, State, Method } from '@stencil/core'
 
-interface MyWindow extends Window {
-  myFunction(): void
-}
-
-declare var window
-
 @Component({
   tag: 'web-audio-sequencer',
-  styleUrl: 'web-audio-sequencer.scss',
   shadow: true
 })
 export class WebAudioSequencer {

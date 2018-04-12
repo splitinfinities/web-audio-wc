@@ -1,9 +1,6 @@
-interface MyWindow extends Window {
-	myFunction(): void
+declare global {
+	interface Window { mousePos: any; mouseInitialized: any; }
 }
-
-declare var window
-
 
 export const buildBiquadFilterNode = function (context, effectWC) {
 	const biquadFilter = context.createBiquadFilter();
@@ -51,7 +48,7 @@ const responsiveTo = function (effect, effectWC) {
 };
 
 const handleMouseMove = function (event) {
-	var dot, eventDoc, doc, body, pageX, pageY;
+	let eventDoc, doc, body;
 
 	event = event || window.event; // IE-ism
 

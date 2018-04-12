@@ -1,10 +1,13 @@
 import { Component, Prop, State, Method, Element } from '@stencil/core'
 import { WebAudioVisualizer } from '../web-audio-visualizer/web-audio-visualizer'
 import { WebAudioSource } from '../web-audio-source/web-audio-source'
-import { WebAudioDebugger } from '../web-audio-debugger/web-audio-debugger'
 import { BufferLoader } from '../../bufferloader'
 import { forEach, delay } from '../../helpers'
 import webmidi from 'webmidi';
+
+declare global {
+    interface Window { AudioContext: any; webkitAudioContext: any; audio_context: any; }
+}
 
 interface MyCustomEvent extends CustomEvent {
   note: {
@@ -16,16 +19,8 @@ interface MyCustomEvent extends CustomEvent {
   data: object
 }
 
-interface MyWindow extends Window {
-  myFunction(): void
-}
-
-declare var window
-
-
 @Component({
   tag: 'web-audio',
-  styleUrl: 'web-audio.scss',
   shadow: true
 })
 
@@ -107,18 +102,22 @@ export class WebAudio {
 
     this._sources = this.element.querySelectorAll('web-audio-source')
 
-    this.externalFiles = []
+    if (this._sources) {
+      this.externalFiles = []
 
-    forEach(this._sources, (index, source) => {
-      this.log(`Preparing ${source.name}`)
-      this.sources[source.name] = source
+      forEach(this._sources, (index, source) => {
+        this.log(`Preparing #${index}: ${source.name}`)
+        this.sources[source.name] = source
 
-      let bufferLoader = new BufferLoader( this.context, [source.src], (bufferList) => {
-        this.cache_sources(bufferList, source)
-      })
+        let bufferLoader = new BufferLoader( this.context, [source.src], (bufferList) => {
+          this.cache_sources(bufferList, source)
+        })
 
-      bufferLoader.load()
-    }, this)
+        bufferLoader.load()
+      }, this)
+    } else {
+      this.log('You need to mount a <web-audio-source> inside the <web-audio> tag!')
+    }
   }
 
   async cache_sources (bufferList, source) {

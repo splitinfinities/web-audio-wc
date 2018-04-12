@@ -1,5 +1,5 @@
-var WebAudioSource = /** @class */ (function () {
-    function WebAudioSource() {
+export class WebAudioSource {
+    constructor() {
         this.inert = false;
         this.midikey = 0;
         this.midichannel = 1;
@@ -7,14 +7,13 @@ var WebAudioSource = /** @class */ (function () {
         this.effectsvolume = 100;
         this.effects = [];
     }
-    WebAudioSource.prototype.getBuffer = function () {
+    getBuffer() {
         return this.buffer;
-    };
-    WebAudioSource.prototype.webAudio = function () {
+    }
+    webAudio() {
         return this.webAudioWrapper;
-    };
-    WebAudioSource.prototype.gain = function (place) {
-        if (place === void 0) { place = "wet"; }
+    }
+    gain(place = "wet") {
         if (place === "wet") {
             return this.wetGain;
         }
@@ -24,8 +23,8 @@ var WebAudioSource = /** @class */ (function () {
         else if (place === "channel") {
             return this.channelGain;
         }
-    };
-    WebAudioSource.prototype.play = function () {
+    }
+    play() {
         if (!this.inert) {
             this.source = this.context.createBufferSource();
             this.source.buffer = this.buffer;
@@ -45,9 +44,8 @@ var WebAudioSource = /** @class */ (function () {
         else {
             throw "Cannot play inert media.";
         }
-    };
-    WebAudioSource.prototype.assignBuffer = function (webAudio, buffer) {
-        var _this = this;
+    }
+    assignBuffer(webAudio, buffer) {
         this.webAudioWrapper = webAudio.element;
         this.context = webAudio.context;
         this.buffer = buffer;
@@ -58,32 +56,33 @@ var WebAudioSource = /** @class */ (function () {
             if (Object.keys(this.effects).length > 0) {
                 // Make the source and gain
                 this.wetGain = this.context.createGain();
-                var previous_1 = "";
-                Object.keys(this.effects).reverse().forEach(function (element, index) {
+                let previous = "";
+                Object.keys(this.effects).reverse().forEach((element, index) => {
                     if (index === 0) {
-                        _this.wetGain.connect(_this.effects[element]);
+                        this.wetGain.connect(this.effects[element]);
                     }
                     else {
-                        _this.effects[previous_1].connect(_this.effects[element]);
+                        this.effects[previous].connect(this.effects[element]);
                     }
-                    previous_1 = element;
+                    previous = element;
                 });
-                this.effects[previous_1].connect(this.channelGain);
+                this.effects[previous].connect(this.channelGain);
             }
             this.dryGain = this.context.createGain();
             this.dryGain.connect(this.channelGain);
             this.channelGain.connect(this.masterGain);
         }
-    };
-    WebAudioSource.prototype.prepareEffects = function () {
+    }
+    prepareEffects() {
         if (this.element.parentElement.nodeName !== "WEB-AUDIO") {
-            var element = this.element.parentElement;
+            let element = this.element.parentElement;
             while (element.nodeName !== "WEB-AUDIO") {
                 this.effects[element.getAttribute("name")] = element.attachEffect(this.context, this.element);
                 element = element.parentElement;
             }
         }
-    };
-    return WebAudioSource;
-}());
-export { WebAudioSource };
+    }
+    static get is() { return "web-audio-source"; }
+    static get encapsulation() { return "shadow"; }
+    static get properties() { return { "assignBuffer": { "method": true }, "buffer": { "state": true }, "channelGain": { "state": true }, "context": { "state": true }, "dryGain": { "state": true }, "effects": { "state": true }, "effectsvolume": { "type": Number, "attr": "effectsvolume" }, "element": { "elementRef": true }, "entry": { "state": true }, "gain": { "method": true }, "getBuffer": { "method": true }, "inert": { "type": Boolean, "attr": "inert" }, "masterGain": { "state": true }, "midichannel": { "type": Number, "attr": "midichannel" }, "midikey": { "type": Number, "attr": "midikey" }, "name": { "type": String, "attr": "name" }, "play": { "method": true }, "source": { "state": true }, "src": { "type": String, "attr": "src" }, "status": { "state": true }, "webAudio": { "method": true }, "webAudioWrapper": { "state": true }, "wetGain": { "state": true } }; }
+}

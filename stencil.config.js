@@ -1,18 +1,13 @@
+const sass = require('@stencil/sass');
+
 exports.config = {
   namespace: 'webaudio',
-  generateDistribution: true,
-  bundles: [
-    {
-      components: [
-        'web-audio-visualizer',
-        'web-audio-visualizer-shader',
-        'web-audio',
-        'web-audio-source',
-        'web-audio-effect',
-        'web-audio-sequencer',
-        'web-audio-debugger'
-      ]
-    }
+  outputTargets: [
+    { type: 'www' },
+    { type: 'dist' }
+  ],
+  plugins: [
+    sass()
   ]
 };
 

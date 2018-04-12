@@ -2,24 +2,25 @@
   "components": [
     {
       "tag": "web-audio",
+      "dependencies": [
+        "web-audio-source"
+      ],
       "componentClass": "WebAudio",
       "componentPath": "components/web-audio/web-audio.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/web-audio/web-audio.scss"
-          ]
-        }
-      },
+      "styles": {},
       "props": [
         {
-          "name": "autoplay"
+          "name": "autoplay",
+          "attr": "autoplay"
         },
         {
-          "name": "midi"
+          "name": "midi",
+          "attr": "midi"
         },
         {
-          "name": "name"
+          "name": "name",
+          "type": "String",
+          "attr": "name"
         }
       ],
       "states": [
@@ -75,6 +76,7 @@
     },
     {
       "tag": "web-audio-debugger",
+      "dependencies": [],
       "componentClass": "WebAudioDebugger",
       "componentPath": "components/web-audio-debugger/web-audio-debugger.js",
       "styles": {
@@ -87,7 +89,8 @@
       "props": [
         {
           "name": "count",
-          "type": "number"
+          "type": "Number",
+          "attr": "count"
         }
       ],
       "states": [
@@ -104,38 +107,45 @@
     },
     {
       "tag": "web-audio-effect",
+      "dependencies": [],
       "componentClass": "WebAudioEffect",
       "componentPath": "components/web-audio-effect/web-audio-effect.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/web-audio-effect/web-audio-effect.scss"
-          ]
-        }
-      },
+      "styles": {},
       "props": [
         {
-          "name": "axis"
+          "name": "axis",
+          "type": "String",
+          "attr": "axis"
         },
         {
-          "name": "method"
+          "name": "method",
+          "type": "String",
+          "attr": "method"
         },
         {
           "name": "midicontroller",
-          "type": "number"
+          "type": "Number",
+          "attr": "midicontroller"
         },
         {
-          "name": "responds"
+          "name": "responds",
+          "type": "String",
+          "attr": "responds"
         },
         {
-          "name": "type"
+          "name": "type",
+          "type": "String",
+          "attr": "type"
         },
         {
-          "name": "use"
+          "name": "use",
+          "type": "String",
+          "attr": "use"
         },
         {
           "name": "value",
-          "type": "number"
+          "type": "Number",
+          "attr": "value"
         }
       ],
       "states": [
@@ -167,33 +177,34 @@
     },
     {
       "tag": "web-audio-sequencer",
+      "dependencies": [],
       "componentClass": "WebAudioSequencer",
       "componentPath": "components/web-audio-sequencer/web-audio-sequencer.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/web-audio-sequencer/web-audio-sequencer.scss"
-          ]
-        }
-      },
+      "styles": {},
       "props": [
         {
           "name": "autoplay",
-          "type": "boolean"
+          "type": "Boolean",
+          "attr": "autoplay"
         },
         {
-          "name": "custom"
+          "name": "custom",
+          "attr": "custom"
         },
         {
-          "name": "name"
+          "name": "name",
+          "type": "String",
+          "attr": "name"
         },
         {
           "name": "taps",
-          "type": "number"
+          "type": "Number",
+          "attr": "taps"
         },
         {
           "name": "tempo",
-          "type": "number"
+          "type": "Number",
+          "attr": "tempo"
         }
       ],
       "states": [
@@ -231,37 +242,40 @@
     },
     {
       "tag": "web-audio-source",
+      "dependencies": [],
       "componentClass": "WebAudioSource",
       "componentPath": "components/web-audio-source/web-audio-source.js",
-      "styles": {
-        "$": {
-          "stylePaths": [
-            "components/web-audio-source/web-audio-source.scss"
-          ]
-        }
-      },
+      "styles": {},
       "props": [
         {
           "name": "effectsvolume",
-          "type": "number"
+          "type": "Number",
+          "attr": "effectsvolume"
         },
         {
           "name": "inert",
-          "type": "boolean"
+          "type": "Boolean",
+          "attr": "inert"
         },
         {
           "name": "midichannel",
-          "type": "number"
+          "type": "Number",
+          "attr": "midichannel"
         },
         {
           "name": "midikey",
-          "type": "number"
+          "type": "Number",
+          "attr": "midikey"
         },
         {
-          "name": "name"
+          "name": "name",
+          "type": "String",
+          "attr": "name"
         },
         {
-          "name": "src"
+          "name": "src",
+          "type": "String",
+          "attr": "src"
         }
       ],
       "states": [
@@ -323,6 +337,7 @@
     },
     {
       "tag": "web-audio-visualizer",
+      "dependencies": [],
       "componentClass": "WebAudioVisualizer",
       "componentPath": "components/web-audio-visualizer/web-audio-visualizer.js",
       "styles": {
@@ -334,21 +349,38 @@
       },
       "props": [
         {
-          "name": "for"
+          "name": "for",
+          "type": "String",
+          "attr": "for"
         },
         {
-          "name": "renderer"
+          "name": "height",
+          "type": "Number",
+          "attr": "height"
+        },
+        {
+          "name": "renderer",
+          "attr": "renderer"
         },
         {
           "name": "size",
-          "type": "number"
+          "type": "Number",
+          "attr": "size"
         },
         {
           "name": "smoothing",
-          "type": "number"
+          "type": "Number",
+          "attr": "smoothing"
         },
         {
-          "name": "type"
+          "name": "type",
+          "type": "String",
+          "attr": "type"
+        },
+        {
+          "name": "width",
+          "type": "Number",
+          "attr": "width"
         }
       ],
       "states": [
@@ -386,9 +418,6 @@
           "name": "freqs"
         },
         {
-          "name": "height"
-        },
-        {
           "name": "times"
         },
         {
@@ -396,9 +425,6 @@
         },
         {
           "name": "vertexShader"
-        },
-        {
-          "name": "width"
         }
       ],
       "methods": [
@@ -408,11 +434,11 @@
       ],
       "hostElement": {
         "name": "element"
-      },
-      "shadow": true
+      }
     },
     {
       "tag": "web-audio-visualizer-shader",
+      "dependencies": [],
       "componentClass": "WebAudioVisualizerShader",
       "componentPath": "components/web-audio-visualizer-shader/web-audio-visualizer-shader.js",
       "styles": {
@@ -424,27 +450,19 @@
       },
       "props": [
         {
-          "name": "type"
+          "name": "type",
+          "type": "String",
+          "attr": "type"
         }
       ],
       "shadow": true
     }
   ],
-  "bundles": [
-    {
-      "components": [
-        "web-audio",
-        "web-audio-debugger",
-        "web-audio-effect",
-        "web-audio-sequencer",
-        "web-audio-source",
-        "web-audio-visualizer",
-        "web-audio-visualizer-shader"
-      ]
-    }
-  ],
+  "collections": [],
   "compiler": {
     "name": "@stencil/core",
-    "version": "0.0.6-0"
-  }
+    "version": "0.7.22",
+    "typescriptVersion": "2.8.1"
+  },
+  "bundles": []
 }

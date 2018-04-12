@@ -1,0 +1,30 @@
+{
+  "namespace": "webaudio",
+  "fsNamespace": "webaudio",
+  "loader": "../webaudio.js",
+  "corePolyfilled": "es5-build-disabled.js",
+  "core": "webaudio.core.js",
+  "components": {
+    "web-audio": {
+      "$": "web-audio"
+    },
+    "web-audio-debugger": {
+      "$": "web-audio-debugger"
+    },
+    "web-audio-effect": {
+      "$": "web-audio-effect"
+    },
+    "web-audio-sequencer": {
+      "$": "web-audio-sequencer"
+    },
+    "web-audio-source": {
+      "$": "web-audio"
+    },
+    "web-audio-visualizer": {
+      "$": "web-audio-visualizer"
+    },
+    "web-audio-visualizer-shader": {
+      "$": "web-audio-visualizer-shader"
+    }
+  }
+}

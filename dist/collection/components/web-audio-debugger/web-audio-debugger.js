@@ -1,25 +1,26 @@
-var WebAudioDebugger = /** @class */ (function () {
-    function WebAudioDebugger() {
+export class WebAudioDebugger {
+    constructor() {
         this.history = [];
         this.count = 50;
     }
-    WebAudioDebugger.prototype.addHistory = function (string) {
-        var our_history = [
-            string
-        ].concat(this.history);
+    addHistory(string) {
+        let our_history = [
+            string,
+            ...this.history
+        ];
         if (our_history.length > this.count) {
             this.history = our_history.slice(1, this.count);
         }
         else {
             this.history = our_history;
         }
-    };
-    WebAudioDebugger.prototype.render = function () {
-        return (h("div", 0, this.history.map(function (log) {
-            return h("div", 0,
-                h("p", 0, log));
-        })));
-    };
-    return WebAudioDebugger;
-}());
-export { WebAudioDebugger };
+    }
+    render() {
+        return (h("div", null, this.history.map((log) => h("div", null,
+            h("p", null, log)))));
+    }
+    static get is() { return "web-audio-debugger"; }
+    static get encapsulation() { return "shadow"; }
+    static get properties() { return { "addHistory": { "method": true }, "count": { "type": Number, "attr": "count" }, "history": { "state": true } }; }
+    static get style() { return "/**style-placeholder:web-audio-debugger:**/"; }
+}

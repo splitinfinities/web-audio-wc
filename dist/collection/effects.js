@@ -1,18 +1,18 @@
-export var buildBiquadFilterNode = function (context, effectWC) {
-    var biquadFilter = context.createBiquadFilter();
+export const buildBiquadFilterNode = function (context, effectWC) {
+    const biquadFilter = context.createBiquadFilter();
     biquadFilter.type = effectWC.method;
     biquadFilter.gain.value = 1.0;
     responsiveTo(biquadFilter, effectWC);
     return biquadFilter;
 };
-export var buildDelayNode = function (context, effectWC) {
-    var delay = context.createDelay(5.0);
+export const buildDelayNode = function (context, effectWC) {
+    const delay = context.createDelay(5.0);
     delay.delayTime.value = 3.0;
     responsiveTo(delay, effectWC);
     return delay;
 };
-export var buildReverbNode = function (context, effectWC) {
-    var convolver = context.createConvolver();
+export const buildReverbNode = function (context, effectWC) {
+    const convolver = context.createConvolver();
     var source = effectWC._use;
     if (source.getBuffer()) {
         convolver.buffer = source.getBuffer();
@@ -21,7 +21,7 @@ export var buildReverbNode = function (context, effectWC) {
     return convolver;
 };
 // Private
-var responsiveTo = function (effect, effectWC) {
+const responsiveTo = function (effect, effectWC) {
     if (effectWC.midicontroller !== false) {
         biquadResponsiveToMidi(effect, effectWC);
     }
@@ -32,8 +32,8 @@ var responsiveTo = function (effect, effectWC) {
         effect.frequency.value = effectWC.value;
     }
 };
-var handleMouseMove = function (event) {
-    var dot, eventDoc, doc, body, pageX, pageY;
+const handleMouseMove = function (event) {
+    let eventDoc, doc, body;
     event = event || window.event; // IE-ism
     // If pageX/Y aren't available and clientX/Y are,
     // calculate pageX/Y - logic taken from jQuery.
@@ -56,21 +56,21 @@ var handleMouseMove = function (event) {
         toLeft: event.pageX,
     };
 };
-var getMousePosition = function () {
+const getMousePosition = function () {
     if (window.mousePos) {
         var event = new CustomEvent('mouse-update', { detail: window.mousePos });
         document.dispatchEvent(event);
     }
 };
-var biquadResponsiveToMidi = function (effect, effectWC) {
-    document.addEventListener('midi-controller-update', function (e) {
+const biquadResponsiveToMidi = function (effect, effectWC) {
+    document.addEventListener('midi-controller-update', (e) => {
         if (effectWC.midicontroller === e.detail.controller.number) {
             effect.frequency.value = ((e.detail.value + 1) / 128) * 3000;
         }
     });
 };
-var biquadResponsiveToMouse = function (effect, effectWC) {
-    document.addEventListener('mouse-update', function (e) {
+const biquadResponsiveToMouse = function (effect, effectWC) {
+    document.addEventListener('mouse-update', (e) => {
         if (effectWC.axis === "x") {
             effect.frequency.value = (e.detail.toLeft * 1.5) || 1000;
         }

@@ -2,8 +2,7 @@ import { Component, Prop, State, Element, Method } from '@stencil/core';
 
 @Component({
   tag: 'web-audio-visualizer',
-  styleUrl: 'web-audio-visualizer.scss',
-  shadow: true
+  styleUrl: 'web-audio-visualizer.scss'
 })
 
 export class WebAudioVisualizer {
@@ -138,12 +137,6 @@ export class WebAudioVisualizer {
     return this.freqs[index];
   }
 
-  render() {
-    return (
-      <canvas id="canvas"></canvas>
-    );
-  }
-
   // Private
   __prepareWebGL() {
     const vbo = this.canvasCTX.createBuffer();
@@ -170,7 +163,7 @@ export class WebAudioVisualizer {
     this.canvasCTX.uniform2f(fragResolution, this.width, this.height);
     this.fragSpectrumArray = new Uint8Array(4 * this.freqs.length);
 
-    const fragSpectrum = this.__createTexture();
+    // const fragSpectrum = this.__createTexture();
   }
 
   __createShader() {
@@ -221,5 +214,11 @@ export class WebAudioVisualizer {
 
   __renderQuad () {
     this.canvasCTX.drawArrays(this.canvasCTX.TRIANGLE_STRIP, 0, 4)
+  }
+
+  render() {
+    return (
+      <canvas id="canvas"></canvas>
+    );
   }
 }

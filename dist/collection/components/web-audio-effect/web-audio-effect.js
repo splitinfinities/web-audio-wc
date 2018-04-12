@@ -1,18 +1,18 @@
 import { assert } from '../../helpers';
 import { buildBiquadFilterNode, buildDelayNode, buildReverbNode } from '../../effects';
-var WebAudioEffect = /** @class */ (function () {
-    function WebAudioEffect() {
+export class WebAudioEffect {
+    constructor() {
         this.method = "lowshelf";
         this.value = 1.0;
         this.responds = null;
         this.midicontroller = 0;
         this.axis = "x";
     }
-    WebAudioEffect.prototype.attachEffect = function (context, source) {
+    attachEffect(context, source) {
         this.context = context;
         this.source = source;
-        this._use = source.webAudio().querySelector("web-audio-source[name=" + this.use + "]");
-        if (assert(this.type, "\"" + this.type + "\" is not a valid effect - Routing around to masterGain.\"")) {
+        this._use = source.webAudio().querySelector(`web-audio-source[name=${this.use}]`);
+        if (assert(this.type, `"${this.type}" is not a valid effect - Routing around to masterGain."`)) {
             if (this.type === "panner") {
                 // make a PannerNode
             }
@@ -39,10 +39,11 @@ var WebAudioEffect = /** @class */ (function () {
             }
         }
         return this.effect;
-    };
-    WebAudioEffect.prototype.effects = function () {
+    }
+    effects() {
         return ["panner", "listener", "reverb", "delay", "compression", "distortion", "filter"];
-    };
-    return WebAudioEffect;
-}());
-export { WebAudioEffect };
+    }
+    static get is() { return "web-audio-effect"; }
+    static get encapsulation() { return "shadow"; }
+    static get properties() { return { "_use": { "state": true }, "attachEffect": { "method": true }, "axis": { "type": String, "attr": "axis" }, "context": { "state": true }, "effect": { "state": true }, "element": { "elementRef": true }, "method": { "type": String, "attr": "method" }, "midicontroller": { "type": Number, "attr": "midicontroller" }, "parent": { "state": true }, "responds": { "type": String, "attr": "responds" }, "source": { "state": true }, "type": { "type": String, "attr": "type" }, "use": { "type": String, "attr": "use" }, "value": { "type": Number, "attr": "value" } }; }
+}
