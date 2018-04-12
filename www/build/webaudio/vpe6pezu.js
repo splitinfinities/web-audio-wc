@@ -1,0 +1,2 @@
+/*! Built with http://stenciljs.com */
+const{h:e}=window.webaudio;class t{render(){return""}static get is(){return"web-audio-visualizer-shader"}static get encapsulation(){return"shadow"}static get properties(){return{type:{type:String,attr:"type"}}}static get style(){return"web-audio-visualizer-shader{display:none}"}}export{t as WebAudioVisualizerShader};

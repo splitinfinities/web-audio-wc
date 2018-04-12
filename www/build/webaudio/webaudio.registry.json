@@ -2,29 +2,29 @@
   "namespace": "webaudio",
   "fsNamespace": "webaudio",
   "loader": "../webaudio.js",
-  "corePolyfilled": "es5-build-disabled.js",
-  "core": "webaudio.core.js",
+  "core": "webaudio.c9d5yfuj.js",
+  "corePolyfilled": "webaudio.r1ukgg6f.js",
   "components": {
     "web-audio": {
-      "$": "web-audio"
+      "$": "vzw0ub29"
     },
     "web-audio-debugger": {
-      "$": "web-audio-debugger"
+      "$": "5ugzpluk"
     },
     "web-audio-effect": {
-      "$": "web-audio-effect"
+      "$": "iedicaj9"
     },
     "web-audio-sequencer": {
-      "$": "web-audio-sequencer"
+      "$": "jrgy75jm"
     },
     "web-audio-source": {
-      "$": "web-audio"
+      "$": "vzw0ub29"
     },
     "web-audio-visualizer": {
-      "$": "web-audio-visualizer"
+      "$": "zzvgwx8c"
     },
     "web-audio-visualizer-shader": {
-      "$": "web-audio-visualizer-shader"
+      "$": "vpe6pezu"
     }
   }
 }
